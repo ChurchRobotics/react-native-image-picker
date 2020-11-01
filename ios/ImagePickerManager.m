@@ -182,6 +182,43 @@ RCT_EXPORT_METHOD(showImagePicker:(NSDictionary *)options callback:(RCTResponseS
     } else {
         self.picker.mediaTypes = @[(NSString *)kUTTypeImage];
     }
+    
+    if (target == RNImagePickerTargetCamera
+        && [self.options valueForKey:@"shoutout"]) {
+        NSString *shoutout = [self.options valueForKey:@"shoutout"];
+        
+        NSArray<NSString *> *wording = [shoutout componentsSeparatedByString:@"\n\n"];
+        NSString *str1 = [wording componentsJoinedByString:@"\n"];
+        
+        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:str1];
+        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, str1.length)];
+        
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        [paragraphStyle setLineSpacing:8];
+        [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, wording[0].length)];
+        UIFont *font = [UIFont systemFontOfSize:18.0f];
+        [attributedString addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, wording[0].length)];
+
+        NSMutableParagraphStyle *paragraphStyle2 = [[NSMutableParagraphStyle alloc] init];
+        [paragraphStyle2 setLineSpacing:5];
+        [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle2 range:NSMakeRange(wording[0].length + 1, wording[1].length)];
+        UIFont *font2 = [UIFont systemFontOfSize:16.0f];
+        [attributedString addAttribute:NSFontAttributeName value:font2 range:NSMakeRange(wording[0].length + 1, wording[1].length)];
+
+        UIView *view = [[UIView alloc] init];
+        view.frame = CGRectMake(0, 77, [[UIScreen mainScreen] bounds].size.width, 145);
+        view.backgroundColor = [UIColor colorWithRed:101/255.0 green:31/255.0 blue:255/255.0 alpha:0.7];
+        
+        UILabel *label = [[UILabel alloc] init];
+        label.attributedText = attributedString;
+        label.numberOfLines = 5;
+        label.frame = CGRectMake(10, 10, view.frame.size.width - 20, view.frame.size.height - 20);
+        [view addSubview:label];
+        [label sizeToFit];
+
+        self.picker.cameraOverlayView = view;
+        [self observeCameraNotification];
+    }
 
     if ([[self.options objectForKey:@"allowsEditing"] boolValue]) {
         self.picker.allowsEditing = true;
@@ -537,6 +574,8 @@ RCT_EXPORT_METHOD(showImagePicker:(NSDictionary *)options callback:(RCTResponseS
         }
     };
 
+    [self removeCameraNotification];
+
     dispatch_async(dispatch_get_main_queue(), ^{
         [picker dismissViewControllerAnimated:YES completion:dismissCompletionBlock];
     });
@@ -544,6 +583,8 @@ RCT_EXPORT_METHOD(showImagePicker:(NSDictionary *)options callback:(RCTResponseS
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
+    [self removeCameraNotification];
+
     dispatch_async(dispatch_get_main_queue(), ^{
         [picker dismissViewControllerAnimated:YES completion:^{
             self.callback(@[@{@"didCancel": @YES}]);
@@ -710,6 +751,29 @@ RCT_EXPORT_METHOD(showImagePicker:(NSDictionary *)options callback:(RCTResponseS
     else {
         NSLog(@"Error setting skip backup attribute: file not found");
         return NO;
+    }
+}
+
+#pragma mark - Notifications
+
+- (void)observeCameraNotification {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCameraNotification:) name:@"_UIImagePickerControllerUserDidCaptureItem" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCameraNotification:) name:@"_UIImagePickerControllerUserDidRejectItem" object:nil];
+}
+
+- (void)removeCameraNotification {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"_UIImagePickerControllerUserDidCaptureItem" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"_UIImagePickerControllerUserDidRejectItem" object:nil];
+}
+
+- (void)handleCameraNotification:(NSNotification *)message {
+    if ([[message name] isEqualToString:@"_UIImagePickerControllerUserDidCaptureItem"]) {
+        // Hide overlay, so that it is not available on the preview view;
+        self.picker.cameraOverlayView.hidden = YES;
+    }
+    if ([[message name] isEqualToString:@"_UIImagePickerControllerUserDidRejectItem"]) {
+        // Retake button pressed on preview. Unhide overlay, so that is available on the camera again
+        self.picker.cameraOverlayView.hidden = NO;
     }
 }
 

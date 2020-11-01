@@ -62,6 +62,7 @@ export default class App extends React.Component {
       takePhotoButtonTitle: 'Take Video...',
       mediaType: 'video',
       videoQuality: 'medium',
+      shoutout: '送给 刘仙小仙女\n\n刘仙小仙女，你好！你的朋友胖大星希望给你送一份祝福。刘仙小仙女，你好！你的朋友胖大星希望给你送一份祝福。刘仙小仙女，你好！你的朋友胖大星希望给你送一份祝福。',
     };
 
     ImagePicker.showImagePicker(options, response => {
