@@ -21,6 +21,12 @@ target 'example' do
   post_install do |installer|
     flipper_post_install(installer)
   end
+  pod 'AlivcCommon', :path => 'AliShortVideo/AlivcCommon/'
+  pod 'AlivcCore', :path => 'AliShortVideo/AlivcCore/'
+  pod 'AlivcCrop', :path => 'AliShortVideo/AlivcCrop/'
+  pod 'AlivcEdit', :path => 'AliShortVideo/AlivcEdit/'
+  pod 'AlivcRecord', :path => 'AliShortVideo/AlivcRecord/'
+  #pod 'AlivcSmartVideo', :path => 'AliShortVideo/AlivcSmartVideo/'
 end
 
 target 'example-tvOS' do

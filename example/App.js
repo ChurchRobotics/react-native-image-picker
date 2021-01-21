@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
+import {NativeModules} from 'react-native';
 
 export default class App extends React.Component {
   state = {
@@ -53,33 +54,35 @@ export default class App extends React.Component {
           avatarSource: source,
         });
       }
-    });
+    });    
   }
 
   selectVideoTapped() {
-    const options = {
-      title: 'Video Picker',
-      takePhotoButtonTitle: 'Take Video...',
-      mediaType: 'video',
-      videoQuality: 'medium',
-      shoutout: '送给 刘仙小仙女\n\n刘仙小仙女，你好！你的朋友胖大星希望给你送一份祝福。刘仙小仙女，你好！你的朋友胖大星希望给你送一份祝福。刘仙小仙女，你好！你的朋友胖大星希望给你送一份祝福。',
-    };
+    // const options = {
+    //   title: 'Video Picker',
+    //   takePhotoButtonTitle: 'Take Video...',
+    //   mediaType: 'video',
+    //   videoQuality: 'medium',
+    //   shoutout: '送给 刘仙小仙女\n\n刘仙小仙女，你好！你的朋友胖大星希望给你送一份祝福。刘仙小仙女，你好！你的朋友胖大星希望给你送一份祝福。刘仙小仙女，你好！你的朋友胖大星希望给你送一份祝福。',
+    // };
 
-    ImagePicker.showImagePicker(options, response => {
-      console.log('Response = ', response);
+    // ImagePicker.showImagePicker(options, response => {
+    //   console.log('Response = ', response);
 
-      if (response.didCancel) {
-        console.log('User cancelled video picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
-        this.setState({
-          videoSource: response.uri,
-        });
-      }
-    });
+    //   if (response.didCancel) {
+    //     console.log('User cancelled video picker');
+    //   } else if (response.error) {
+    //     console.log('ImagePicker Error: ', response.error);
+    //   } else if (response.customButton) {
+    //     console.log('User tapped custom button: ', response.customButton);
+    //   } else {
+    //     this.setState({
+    //       videoSource: response.uri,
+    //     });
+    //   }
+    // });
+    const PYShortVideoBridge = NativeModules.PYShortVideoBridge;
+    PYShortVideoBridge.videoShooting('送给 刘仙小仙女');
   }
 
   render() {

@@ -20,6 +20,8 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		9996D9E0DF3E683864CA2A7B /* libPods-example-exampleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 986C3F349B3D8E8C2BC60148 /* libPods-example-exampleTests.a */; };
 		E4B1251B3A4582F0CC42880B /* libPods-example-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC5AA06B58F545D6B1BAAF30 /* libPods-example-tvOS.a */; };
+		F752E55925B962170008BA8D /* PYShortVideoBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = F752E55825B962170008BA8D /* PYShortVideoBridge.m */; };
+		F752E56C25B96C010008BA8D /* PYTeleprompter.m in Sources */ = {isa = PBXBuildFile; fileRef = F752E56B25B96C010008BA8D /* PYTeleprompter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,10 @@
 		DB73E8E4A2927C10EA9BB53F /* Pods-example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-example.debug.xcconfig"; path = "Target Support Files/Pods-example/Pods-example.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		F752E55725B962170008BA8D /* PYShortVideoBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PYShortVideoBridge.h; sourceTree = "<group>"; };
+		F752E55825B962170008BA8D /* PYShortVideoBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PYShortVideoBridge.m; sourceTree = "<group>"; };
+		F752E56A25B96C010008BA8D /* PYTeleprompter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PYTeleprompter.h; sourceTree = "<group>"; };
+		F752E56B25B96C010008BA8D /* PYTeleprompter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PYTeleprompter.m; sourceTree = "<group>"; };
 		F830C1ACE891E849A55FEFB8 /* Pods-example-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-example-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-example-tvOSTests/Pods-example-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -143,6 +149,7 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				F752E55625B961DD0008BA8D /* ShortVideo */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
@@ -197,6 +204,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		F752E55625B961DD0008BA8D /* ShortVideo */ = {
+			isa = PBXGroup;
+			children = (
+				F752E55725B962170008BA8D /* PYShortVideoBridge.h */,
+				F752E55825B962170008BA8D /* PYShortVideoBridge.m */,
+				F752E56A25B96C010008BA8D /* PYTeleprompter.h */,
+				F752E56B25B96C010008BA8D /* PYTeleprompter.m */,
+			);
+			path = ShortVideo;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -209,6 +227,7 @@
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
 				3C5B7D58CE68E5073BBA63FB /* [CP] Copy Pods Resources */,
+				918F07409302A0EAB3A406FF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -231,6 +250,7 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				96253F263C36B6457F1D2C35 /* [CP] Copy Pods Resources */,
+				54A21BEBF20E15BA63B60E5D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -286,6 +306,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = PY;
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -293,7 +314,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = REQL7UAHBQ;
+						DevelopmentTeam = YY4M4NX34G;
 						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -398,15 +419,95 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-example-exampleTests/Pods-example-exampleTests-resources.sh",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/LocalAnimationEffects.json",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/LocalCaption.json",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/LocalFilter.json",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/LocalFont.json",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/LocalFont_ios8.json",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/LocalMV.json",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/LocalPaster.json",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/tail.png",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/watermark.png",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/Animation_Effects",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/Caption",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/Face_Sticker",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/Filter",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/MV",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/Sticker",
+				"${PODS_CONFIGURATION_BUILD_DIR}/AlivcCore/AlivcCore.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/AlivcCrop/AlivcCropBasic.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/AlivcEdit/AlivcEdit.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/AlivcRecord/AlivcRecord.bundle",
+				"${PODS_ROOT}/AliyunVideoSDKPro/AliyunVideoSDKPro.bundle",
+				"${PODS_ROOT}/Nama-lite/FaceUnity-SDK-iOS-lite/release_note.txt",
+				"${PODS_ROOT}/Nama-lite/FaceUnity-SDK-iOS-lite/Resources/anim_model.bundle",
+				"${PODS_ROOT}/Nama-lite/FaceUnity-SDK-iOS-lite/Resources/ardata_ex.bundle",
+				"${PODS_ROOT}/Nama-lite/FaceUnity-SDK-iOS-lite/Resources/face_beautification.bundle",
+				"${PODS_ROOT}/Nama-lite/FaceUnity-SDK-iOS-lite/Resources/fxaa.bundle",
+				"${PODS_ROOT}/Nama-lite/FaceUnity-SDK-iOS-lite/Resources/v3.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/LocalAnimationEffects.json",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/LocalCaption.json",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/LocalFilter.json",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/LocalFont.json",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/LocalFont_ios8.json",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/LocalMV.json",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/LocalPaster.json",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/tail.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/watermark.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Animation_Effects",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Caption",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Face_Sticker",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Filter",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MV",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Sticker",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AlivcCore.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AlivcCropBasic.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AlivcEdit.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AlivcRecord.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AliyunVideoSDKPro.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/release_note.txt",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/anim_model.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ardata_ex.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/face_beautification.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/fxaa.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/v3.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-example-exampleTests/Pods-example-exampleTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		54A21BEBF20E15BA63B60E5D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-example/Pods-example-frameworks.sh",
+				"${PODS_ROOT}/AlivcConan/AlivcConan.framework",
+				"${PODS_ROOT}/AliyunRace/AliyunRace.framework",
+				"${PODS_ROOT}/AliyunRace/Face3D.framework",
+				"${PODS_ROOT}/AliyunRace/opencv2.framework",
+				"${PODS_ROOT}/AliyunVideoSDKPro/AliyunVideoCore.framework",
+				"${PODS_ROOT}/QuCore-ThirdParty/frameworks/alivcffmpeg.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlivcConan.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AliyunRace.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Face3D.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/opencv2.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AliyunVideoCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/alivcffmpeg.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-example/Pods-example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		815FB11D956FFB12EFBCCC11 /* [CP] Check Pods Manifest.lock */ = {
@@ -431,6 +532,34 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		918F07409302A0EAB3A406FF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-example-exampleTests/Pods-example-exampleTests-frameworks.sh",
+				"${PODS_ROOT}/AlivcConan/AlivcConan.framework",
+				"${PODS_ROOT}/AliyunRace/AliyunRace.framework",
+				"${PODS_ROOT}/AliyunRace/Face3D.framework",
+				"${PODS_ROOT}/AliyunRace/opencv2.framework",
+				"${PODS_ROOT}/AliyunVideoSDKPro/AliyunVideoCore.framework",
+				"${PODS_ROOT}/QuCore-ThirdParty/frameworks/alivcffmpeg.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlivcConan.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AliyunRace.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Face3D.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/opencv2.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AliyunVideoCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/alivcffmpeg.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-example-exampleTests/Pods-example-exampleTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		96253F263C36B6457F1D2C35 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -438,10 +567,62 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-example/Pods-example-resources.sh",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/LocalAnimationEffects.json",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/LocalCaption.json",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/LocalFilter.json",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/LocalFont.json",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/LocalFont_ios8.json",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/LocalMV.json",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/LocalPaster.json",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/tail.png",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/watermark.png",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/Animation_Effects",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/Caption",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/Face_Sticker",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/Filter",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/MV",
+				"${PODS_ROOT}/../AliShortVideo/AlivcCore/AlivcCore/Assets/ShortVideoResource/Sticker",
+				"${PODS_CONFIGURATION_BUILD_DIR}/AlivcCore/AlivcCore.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/AlivcCrop/AlivcCropBasic.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/AlivcEdit/AlivcEdit.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/AlivcRecord/AlivcRecord.bundle",
+				"${PODS_ROOT}/AliyunVideoSDKPro/AliyunVideoSDKPro.bundle",
+				"${PODS_ROOT}/Nama-lite/FaceUnity-SDK-iOS-lite/release_note.txt",
+				"${PODS_ROOT}/Nama-lite/FaceUnity-SDK-iOS-lite/Resources/anim_model.bundle",
+				"${PODS_ROOT}/Nama-lite/FaceUnity-SDK-iOS-lite/Resources/ardata_ex.bundle",
+				"${PODS_ROOT}/Nama-lite/FaceUnity-SDK-iOS-lite/Resources/face_beautification.bundle",
+				"${PODS_ROOT}/Nama-lite/FaceUnity-SDK-iOS-lite/Resources/fxaa.bundle",
+				"${PODS_ROOT}/Nama-lite/FaceUnity-SDK-iOS-lite/Resources/v3.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/LocalAnimationEffects.json",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/LocalCaption.json",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/LocalFilter.json",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/LocalFont.json",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/LocalFont_ios8.json",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/LocalMV.json",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/LocalPaster.json",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/tail.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/watermark.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Animation_Effects",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Caption",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Face_Sticker",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Filter",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MV",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Sticker",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AlivcCore.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AlivcCropBasic.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AlivcEdit.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AlivcRecord.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AliyunVideoSDKPro.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/release_note.txt",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/anim_model.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ardata_ex.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/face_beautification.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/fxaa.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/v3.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -568,8 +749,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F752E55925B962170008BA8D /* PYShortVideoBridge.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				F752E56C25B96C010008BA8D /* PYTeleprompter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -656,7 +839,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = REQL7UAHBQ;
+				DEVELOPMENT_TEAM = YY4M4NX34G;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -665,7 +848,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.churchrobotics.example.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.churchrobotics.example.iosrn;
 				PRODUCT_NAME = example;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -680,7 +863,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = REQL7UAHBQ;
+				DEVELOPMENT_TEAM = YY4M4NX34G;
 				INFOPLIST_FILE = example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -688,7 +871,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.churchrobotics.example.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.churchrobotics.example.iosrn;
 				PRODUCT_NAME = example;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

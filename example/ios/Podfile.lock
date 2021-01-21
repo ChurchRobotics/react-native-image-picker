@@ -1,4 +1,46 @@
 PODS:
+  - AFNetworking (4.0.1):
+    - AFNetworking/NSURLSession (= 4.0.1)
+    - AFNetworking/Reachability (= 4.0.1)
+    - AFNetworking/Security (= 4.0.1)
+    - AFNetworking/Serialization (= 4.0.1)
+    - AFNetworking/UIKit (= 4.0.1)
+  - AFNetworking/NSURLSession (4.0.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (4.0.1)
+  - AFNetworking/Security (4.0.1)
+  - AFNetworking/Serialization (4.0.1)
+  - AFNetworking/UIKit (4.0.1):
+    - AFNetworking/NSURLSession
+  - AlivcCommon (0.1.0):
+    - AFNetworking
+    - FMDB
+    - JSONModel
+    - MBProgressHUD
+    - SDWebImage
+    - ZipArchive
+  - AlivcConan (1.0.5):
+    - AlivcConan/AlivcConan (= 1.0.5)
+  - AlivcConan/AlivcConan (1.0.5)
+  - AlivcCore (0.1.0):
+    - AlivcCommon
+    - AlivcConan
+    - AliyunVideoSDKPro
+    - QuCore-ThirdParty
+    - VODUpload
+  - AlivcCrop (0.1.0):
+    - AlivcCore
+  - AlivcEdit (0.1.0):
+    - AlivcCore
+  - AlivcRecord (0.1.0):
+    - AlivcCore
+    - AliyunRace
+    - Nama-lite (~> 5.9.0)
+  - AliyunOSSiOS (2.10.8)
+  - AliyunRace (1.2.0)
+  - AliyunVideoSDKPro (3.18.1)
   - boost-for-react-native (1.63.0)
   - CocoaAsyncSocket (7.6.4)
   - CocoaLibEvent (1.0.0)
@@ -57,6 +99,9 @@ PODS:
   - FlipperKit/SKIOSNetworkPlugin (0.41.5):
     - FlipperKit/Core
     - FlipperKit/FlipperKitNetworkPlugin
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
   - Folly (2020.01.13.00):
     - boost-for-react-native
     - DoubleConversion
@@ -67,9 +112,13 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
+  - JSONModel (1.8.0)
+  - MBProgressHUD (1.2.0)
+  - Nama-lite (5.9.0)
   - OpenSSL-Universal (1.0.2.20):
     - OpenSSL-Universal/Static (= 1.0.2.20)
   - OpenSSL-Universal/Static (1.0.2.20)
+  - QuCore-ThirdParty (3.15.0)
   - RCTRequired (0.63.2)
   - RCTTypeSafety (0.63.2):
     - FBLazyVector (= 0.63.2)
@@ -298,11 +347,22 @@ PODS:
     - React-Core (= 0.63.2)
     - React-cxxreact (= 0.63.2)
     - React-jsi (= 0.63.2)
+  - SDWebImage (5.10.2):
+    - SDWebImage/Core (= 5.10.2)
+  - SDWebImage/Core (5.10.2)
+  - VODUpload (1.6.1):
+    - AliyunOSSiOS
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
+  - ZipArchive (1.4.0)
 
 DEPENDENCIES:
+  - AlivcCommon (from `AliShortVideo/AlivcCommon/`)
+  - AlivcCore (from `AliShortVideo/AlivcCore/`)
+  - AlivcCrop (from `AliShortVideo/AlivcCrop/`)
+  - AlivcEdit (from `AliShortVideo/AlivcEdit/`)
+  - AlivcRecord (from `AliShortVideo/AlivcRecord/`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/Libraries/FBReactNativeSpec`)
@@ -354,6 +414,11 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AFNetworking
+    - AlivcConan
+    - AliyunOSSiOS
+    - AliyunRace
+    - AliyunVideoSDKPro
     - boost-for-react-native
     - CocoaAsyncSocket
     - CocoaLibEvent
@@ -364,10 +429,28 @@ SPEC REPOS:
     - Flipper-PeerTalk
     - Flipper-RSocket
     - FlipperKit
+    - FMDB
+    - JSONModel
+    - MBProgressHUD
+    - Nama-lite
     - OpenSSL-Universal
+    - QuCore-ThirdParty
+    - SDWebImage
+    - VODUpload
     - YogaKit
+    - ZipArchive
 
 EXTERNAL SOURCES:
+  AlivcCommon:
+    :path: AliShortVideo/AlivcCommon/
+  AlivcCore:
+    :path: AliShortVideo/AlivcCore/
+  AlivcCrop:
+    :path: AliShortVideo/AlivcCrop/
+  AlivcEdit:
+    :path: AliShortVideo/AlivcEdit/
+  AlivcRecord:
+    :path: AliShortVideo/AlivcRecord/
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   FBLazyVector:
@@ -424,6 +507,16 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
+  AlivcCommon: 74cdd4331ad59994ba1cc7f961a8361cd6ba0be6
+  AlivcConan: 4248bd59c22be01633650e3d8a538dc73f144613
+  AlivcCore: fcf75eef2ad06e6ebcb7aec950682d08e972da11
+  AlivcCrop: 146d4248ec3bc8572e898fde3c4d958b07bc7a70
+  AlivcEdit: a9eb549aa4748290fb5e609b4c1531b12a6a2e77
+  AlivcRecord: d840f4da252ca0ea64d4bec044757ce61425545d
+  AliyunOSSiOS: 8db92936545593b9e5c66d680ef2ac0738946651
+  AliyunRace: 200096bf41861945efac646402fac8359d5f4ee5
+  AliyunVideoSDKPro: 1cce09217b3b7f871a2f52a80d0d2ea0f2ddc915
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
   CocoaLibEvent: 2fab71b8bd46dd33ddb959f7928ec5909f838e3f
@@ -437,9 +530,14 @@ SPEC CHECKSUMS:
   Flipper-PeerTalk: 116d8f857dc6ef55c7a5a75ea3ceaafe878aadc9
   Flipper-RSocket: 64e7431a55835eb953b0bf984ef3b90ae9fdddd7
   FlipperKit: bc68102cd4952a258a23c9c1b316c7bec1fecf83
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
+  JSONModel: 02ab723958366a3fd27da57ea2af2113658762e9
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  Nama-lite: f046ff8b9c53a0d6f5bf344ee78850af3d7bf24b
   OpenSSL-Universal: ff34003318d5e1163e9529b08470708e389ffcdd
+  QuCore-ThirdParty: f3c49341745bd366e8557a8994407cbbda5c1c44
   RCTRequired: f13f25e7b12f925f1f6a6a8c69d929a03c0129fe
   RCTTypeSafety: 44982c5c8e43ff4141eb519a8ddc88059acd1f3a
   React: e1c65dd41cb9db13b99f24608e47dd595f28ca9a
@@ -461,9 +559,12 @@ SPEC CHECKSUMS:
   React-RCTText: 1b6773e776e4b33f90468c20fe3b16ca3e224bb8
   React-RCTVibration: 4d2e726957f4087449739b595f107c0d4b6c2d2d
   ReactCommon: a0a1edbebcac5e91338371b72ffc66aa822792ce
+  SDWebImage: b969dcfc02c40a5da71eac0b03b8f1a0c794a86f
+  VODUpload: 2c8ac654ceda839dda97a92023a270041dd9901e
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
+  ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
 
-PODFILE CHECKSUM: 311cf87a4a33d759b7ec994ec3735e03d4ededbf
+PODFILE CHECKSUM: e920574c14321efc4669e09d0ec1e4342632df0f
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.10.0
