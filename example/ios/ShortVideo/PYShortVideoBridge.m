@@ -24,15 +24,14 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(videoShooting:(NSString *)s) {
   dispatch_async(dispatch_get_main_queue(), ^{
-    NSString *msg = [NSString stringWithFormat:@"RN传递过来的字符串：%@", s];
-    NSLog(@"%@",msg);
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    UIViewController *recordParam = [[AlivcShortVideoRoute shared] alivcViewControllerWithType:AlivcViewControlRecord];
-    
-    UINavigationController *nav = (UINavigationController *)appDelegate.window.rootViewController;
-//    [nav setNavigationBarHidden:YES];
-    [nav pushViewController:recordParam animated:YES];
+    UIViewController *recordParam = [[AlivcShortVideoRoute shared] makeRecordControllerWithWord:s];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:recordParam];
+    [nav setNavigationBarHidden:YES];
+    nav.modalPresentationStyle = UIModalPresentationFullScreen;
+    [appDelegate.window.rootViewController presentViewController:nav animated:YES completion:nil];
   });
+  
 }
 
 @end

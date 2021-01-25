@@ -29,8 +29,15 @@
     _textView.editable = NO;
     _textView.selectable = NO;
     _textView.text = self.word;
+    _textView.textColor = [UIColor whiteColor];
   }
   return _textView;
+}
+
+- (void)setWord:(NSString *)word {
+    if (word && ![word isEqualToString:@""]) {
+        self.textView.text = word;
+    }
 }
 
 

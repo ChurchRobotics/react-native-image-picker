@@ -9,6 +9,7 @@
 #import "AlivcShortVideoRoute.h"
 #import "AliyunIConfig.h"
 //#import "AliyunEffectPrestoreManager.h"
+#import <AlivcRecord/AliyunMagicCameraViewController.h>
 
 @interface AlivcShortVideoRoute()
 
@@ -73,6 +74,16 @@ static AlivcShortVideoRoute *_instance = nil;
 -(id)mutableCopyWithZone:(NSZone *)zone
 {
     return _instance;
+}
+
+- (UIViewController *)makeRecordControllerWithWord:(NSString *)word
+{
+    UIViewController * vc = [self alivcViewControllerWithType:AlivcViewControlRecord];
+    if ([vc isKindOfClass:[AliyunMagicCameraViewController class]]) {
+        AliyunMagicCameraViewController *controller = (AliyunMagicCameraViewController*)vc;
+        controller.teleprompt = word;
+    }
+    return  vc;
 }
 
 - (UIViewController *)alivcViewControllerWithType:(AlivcViewControlType )type{

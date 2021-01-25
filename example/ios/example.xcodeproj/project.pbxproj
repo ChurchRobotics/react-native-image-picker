@@ -21,7 +21,6 @@
 		9996D9E0DF3E683864CA2A7B /* libPods-example-exampleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 986C3F349B3D8E8C2BC60148 /* libPods-example-exampleTests.a */; };
 		E4B1251B3A4582F0CC42880B /* libPods-example-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC5AA06B58F545D6B1BAAF30 /* libPods-example-tvOS.a */; };
 		F752E55925B962170008BA8D /* PYShortVideoBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = F752E55825B962170008BA8D /* PYShortVideoBridge.m */; };
-		F752E56C25B96C010008BA8D /* PYTeleprompter.m in Sources */ = {isa = PBXBuildFile; fileRef = F752E56B25B96C010008BA8D /* PYTeleprompter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,8 +69,6 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F752E55725B962170008BA8D /* PYShortVideoBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PYShortVideoBridge.h; sourceTree = "<group>"; };
 		F752E55825B962170008BA8D /* PYShortVideoBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PYShortVideoBridge.m; sourceTree = "<group>"; };
-		F752E56A25B96C010008BA8D /* PYTeleprompter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PYTeleprompter.h; sourceTree = "<group>"; };
-		F752E56B25B96C010008BA8D /* PYTeleprompter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PYTeleprompter.m; sourceTree = "<group>"; };
 		F830C1ACE891E849A55FEFB8 /* Pods-example-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-example-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-example-tvOSTests/Pods-example-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -209,8 +206,6 @@
 			children = (
 				F752E55725B962170008BA8D /* PYShortVideoBridge.h */,
 				F752E55825B962170008BA8D /* PYShortVideoBridge.m */,
-				F752E56A25B96C010008BA8D /* PYTeleprompter.h */,
-				F752E56B25B96C010008BA8D /* PYTeleprompter.m */,
 			);
 			path = ShortVideo;
 			sourceTree = "<group>";
@@ -752,7 +747,6 @@
 				F752E55925B962170008BA8D /* PYShortVideoBridge.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				F752E56C25B96C010008BA8D /* PYTeleprompter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -37,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) AlivcRecordBeautyView *beautyView;        //美颜view
 
+@property(nonatomic, strong) NSString *teleprompt;
 //合拍禁用侧边按钮
 - (void)hiddenSideBarButtons;
 //完成按钮enable的条件 是否是录制时间大于等于最短时间

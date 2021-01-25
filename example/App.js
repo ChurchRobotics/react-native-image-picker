@@ -82,7 +82,9 @@ export default class App extends React.Component {
     //   }
     // });
     const PYShortVideoBridge = NativeModules.PYShortVideoBridge;
-    PYShortVideoBridge.videoShooting('送给 刘仙小仙女');
+    PYShortVideoBridge.videoShooting(
+      '送给 刘仙小仙女\n\n刘仙小仙女，你好！你的朋友胖大星希望给你送一份祝福。刘仙小仙女，你好！你的朋友胖大星希望给你送一份祝福。刘仙小仙女，你好！你的朋友胖大星希望给你送一份祝福。',
+    );
   }
 
   render() {

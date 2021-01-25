@@ -170,5 +170,9 @@ typedef void (^AlivcCropFinishBlock)(NSString *outputPath);
  */
 -(UIViewController *)alivcViewControllerWithType:(AlivcViewControlType )type;
 
+
+/// 生成一个视频录制的控制器
+/// @param word 提词器的词
+- (UIViewController *)makeRecordControllerWithWord:(NSString *)word;
 @end
 NS_ASSUME_NONNULL_END

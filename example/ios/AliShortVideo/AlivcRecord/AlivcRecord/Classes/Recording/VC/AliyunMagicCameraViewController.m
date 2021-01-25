@@ -26,6 +26,7 @@
 #import "AlivcRecordFocusView.h"
 #import "AliyunMusicPickViewController.h"
 #import "AlivcRecordSliderButtonsView.h"
+#import "PYTeleprompter.h"
 //美颜
 #if SDK_VERSION == SDK_VERSION_CUSTOM
 #import "AlivcShortVideoFaceUnityManager.h"
@@ -62,6 +63,7 @@ AlivcRecordPasterViewDelegate>
 @property (nonatomic, strong) AlivcBottomMenuFilterView *filterView;    //滤镜view
 @property (nonatomic, strong) AlivcBottomMenuSpecialFilterView *specialFilterView;
 @property (nonatomic, strong) AlivcRecordFocusView *focusView;          //聚焦框
+@property(nonatomic, strong)  PYTeleprompter *teleprompter; //提词器
 //data
 @property (nonatomic, strong) AliyunDownloadManager *downloadManager;   //下载管理（动图）
 @property (nonatomic, strong) AliyunResourceManager *resourceManager;   //资源管理（动图）
@@ -166,6 +168,7 @@ AlivcRecordPasterViewDelegate>
     _navigationBar =[[AlivcRecordNavigationBar alloc]initWithUIConfig:_uiConfig];
     _navigationBar.delegate =self;
     [self.view addSubview:_navigationBar];
+    [self.view addSubview:self.teleprompter];
     //添加右侧菜单栏
     [self.view addSubview:self.sliderButtonsView];
     //添加底部view
@@ -180,7 +183,46 @@ AlivcRecordPasterViewDelegate>
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDelete:) name:AliyunEffectResourceDeleteNotification object:nil];
+    
+//    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange) name:UIDeviceOrientationDidChangeNotification object:nil];
+
 }
+
+- (void)deviceOrientationDidChange
+{
+    NSLog(@"deviceOrientationDidChange:%ld",(long)[UIDevice currentDevice].orientation);
+//    if([UIDevice currentDevice].orientation == UIDeviceOrientationPortrait) {
+//        [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait];
+//        [self orientationChange:NO];
+//        //注意： UIDeviceOrientationLandscapeLeft 与 UIInterfaceOrientationLandscapeRight
+//    } else if ([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeLeft) {
+//        [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeRight];
+//        [self orientationChange:YES];
+//    }
+}
+
+- (void)orientationChange:(BOOL)landscapeRight
+{
+    if (landscapeRight) {
+        [UIView animateWithDuration:0.2f animations:^{
+            self.view.transform = CGAffineTransformMakeRotation(M_PI_2);
+            self.view.bounds = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
+        }];
+    }else {
+        [UIView animateWithDuration:0.2f animations:^{
+            self.view.transform = CGAffineTransformMakeRotation(0);
+            self.view.bounds = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
+        }];
+    }
+}
+
+//- (BOOL)shouldAutorotate
+//{
+//    return NO;
+//}
+
+
 - (void)startNetworkReachability{
     //网络状态判定
     _reachability = [AliyunReachability reachabilityForInternetConnection];
@@ -274,6 +316,14 @@ AlivcRecordPasterViewDelegate>
     return _quVideo.minDuration;
 }
 #pragma mark - GET
+
+- (PYTeleprompter *)teleprompter {
+    if (!_teleprompter) {
+        _teleprompter = [[PYTeleprompter alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(self.navigationBar.frame)+40, 100, 200)];
+        _teleprompter.word = self.teleprompt;
+    }
+    return _teleprompter;
+}
 - (AliyunIRecorder *)recorder{
     if (!_recorder) {
         //清除之前生成的录制路径
@@ -461,7 +511,12 @@ AlivcRecordPasterViewDelegate>
 #if SDK_VERSION == SDK_VERSION_CUSTOM
             [[AlivcShortVideoFaceUnityManager shareManager] destoryItems];
 #endif
-            [self.navigationController popViewControllerAnimated:YES];
+            NSLog(@"%@",[self.navigationController viewControllers]);
+            if([[self.navigationController viewControllers] count] > 1) {
+                [self.navigationController popViewControllerAnimated:YES];
+            } else {
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }
         }
             break;
         case AlivcRecordNavigationBarTypeCameraSwitch://切换摄像头
