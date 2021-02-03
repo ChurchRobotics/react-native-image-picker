@@ -8,6 +8,9 @@
 
 #import "AliyunPublishProgressView.h"
 #import "AVC_ShortVideo_Config.h"
+#import <AlivcCommon/UIColor+AlivcHelper.h>
+
+
 @interface AliyunPublishProgressView ()
 @property(nonatomic, strong) UILabel *topLable;
 @property(nonatomic, strong) UILabel *middleLable;
@@ -39,7 +42,8 @@
 - (void)setupTopViews {
   CGFloat width = CGRectGetWidth(self.frame);
   CGFloat height = CGRectGetHeight(self.frame);
-  self.backgroundColor = rgba(27, 33, 51, 0.50);
+//  self.backgroundColor = rgba(27, 33, 51, 0.50);
+    self.backgroundColor = [UIColor colorWithHexString:@"#111111"];
   _topLable =
       [[UILabel alloc] initWithFrame:CGRectMake(0, height / 2 - 40, width, 24)];
   _topLable.font = [UIFont boldSystemFontOfSize:24.f];
@@ -50,10 +54,10 @@
 
   _middleLable =
       [[UILabel alloc] initWithFrame:CGRectMake(0, height / 2 - 5, width, 22)];
-  _middleLable.font = [UIFont systemFontOfSize:16.f];
+  _middleLable.font = [UIFont systemFontOfSize:18.f];
   _middleLable.textColor = [UIColor whiteColor];
   _middleLable.textAlignment = NSTextAlignmentCenter;
-  _middleLable.text = NSLocalizedString(@"视频合成中" , nil);
+  _middleLable.text = NSLocalizedString(@"视频合成中，请不要关闭应用" , nil);
   [self addSubview:_middleLable];
 
   _bottomLable =
@@ -62,7 +66,7 @@
   _bottomLable.textColor = rgba(188, 188, 188, 1);
   _bottomLable.textAlignment = NSTextAlignmentCenter;
   _bottomLable.text = NSLocalizedString(@"请不要关闭应用" , nil);
-  [self addSubview:_bottomLable];
+//  [self addSubview:_bottomLable];
 
   _finishImageView = [[UIImageView alloc]
       initWithFrame:CGRectMake((width - 26) / 2, height / 2 - 40, 26, 26)];
@@ -73,8 +77,8 @@
 
 - (void)setProgress:(CGFloat)progress {
   _topLable.text = [NSString stringWithFormat:@"%d%%", (int)(progress * 100)];
-  _middleLable.text = NSLocalizedString(@"视频合成中" , nil);
-  _bottomLable.text = NSLocalizedString(@"请不要关闭应用" , nil);
+  _middleLable.text = NSLocalizedString(@"视频合成中，请不要关闭应用" , nil);
+//  _bottomLable.text = NSLocalizedString(@"请不要关闭应用" , nil);
   _topLable.hidden = NO;
   _middleLable.hidden = NO;
   _bottomLable.hidden = NO;
@@ -82,15 +86,16 @@
 }
 - (void)markAsFinihed {
   _middleLable.text = NSLocalizedString(@"合成成功" , nil);
-  _topLable.hidden = YES;
+  _topLable.hidden = NO;
+    _topLable.text = @"100%";
   _middleLable.hidden = NO;
   _bottomLable.hidden = YES;
-  _finishImageView.hidden = NO;
+  _finishImageView.hidden = YES;
 }
 - (void)markAsFailed {
   _finishImageView.image = [AliyunImage imageNamed:@"icon_composite_fail"];
-  _middleLable.text = NSLocalizedString(@"合成失败" , nil);
-  _bottomLable.text = NSLocalizedString(@"请返回编辑稍后再试", nil);
+  _middleLable.text = NSLocalizedString(@"合成失败，请返回编辑稍后再试" , nil);
+//  _bottomLable.text = NSLocalizedString(@"请返回编辑稍后再试", nil);
   _topLable.hidden = YES;
   _middleLable.hidden = NO;
   _bottomLable.hidden = NO;

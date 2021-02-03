@@ -169,7 +169,7 @@
         [self addSubview:btn];
         if (i == 0) {
             btn.selected = YES;
-            btn.backgroundColor = AlivcOxRGB(0x00c1de);
+            btn.backgroundColor = AlivcOxRGB(0x651FFF);
             self.selectButton = btn;
         }
     }
@@ -338,7 +338,7 @@
     self.selectButton.backgroundColor = rgba(255, 255, 255, 0.2);
     self.selectButton = button;
     self.selectButton.selected = YES;
-    self.selectButton.backgroundColor = AlivcOxRGB(0x00c1de);
+    self.selectButton.backgroundColor = AlivcOxRGB(0x651FFF);
     [self removeFirstTip];
 }
 

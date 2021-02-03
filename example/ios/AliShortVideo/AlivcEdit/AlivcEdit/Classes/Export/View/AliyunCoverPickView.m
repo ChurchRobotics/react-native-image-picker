@@ -10,6 +10,7 @@
 #import "AVAsset+VideoInfo.h"
 #import "AVC_ShortVideo_Config.h"
 #import <AVFoundation/AVFoundation.h>
+#import <AlivcCommon/UIColor+AlivcHelper.h>
 @interface AliyunCoverPickView ()
 @property(nonatomic, strong) UICollectionView *collectionView;
 @property(nonatomic, strong) UIImageView *progressView;
@@ -32,28 +33,48 @@
 }
 
 - (void)setupSubviews {
-  UICollectionViewFlowLayout *followLayout =
-      [[UICollectionViewFlowLayout alloc] init];
-  followLayout.itemSize =
-      CGSizeMake(CGRectGetHeight(self.frame), CGRectGetHeight(self.frame));
-  followLayout.minimumLineSpacing = 0;
-  followLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-
-  _collectionView = [[UICollectionView alloc]
-             initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame),
-                                      CGRectGetHeight(self.frame))
-      collectionViewLayout:followLayout];
-  _collectionView.dataSource = (id<UICollectionViewDataSource>)self;
-  [_collectionView registerClass:[UICollectionViewCell class]
-      forCellWithReuseIdentifier:@"cell"];
-  [self addSubview:_collectionView];
-  UIView *view = [[UIView alloc] initWithFrame:self.bounds];
-  view.backgroundColor = [UIColor clearColor];
-  [self addSubview:view];
-  _progressView = [[UIImageView alloc]
-      initWithImage:[AliyunImage imageNamed:@"icon_cover_slide"]];
-  _progressView.frame = CGRectMake(0, 0, 4, CGRectGetHeight(self.frame));
-  [view addSubview:_progressView];
+    self.backgroundColor = [UIColor colorWithHexString:@"#651FFF"];
+    self.layer.cornerRadius = 10;
+    self.layer.masksToBounds = YES;
+    
+    UICollectionViewFlowLayout *followLayout =[[UICollectionViewFlowLayout alloc] init];
+    CGFloat itemH = self.frame.size.height-6;
+    CGFloat itemW = (self.frame.size.width-34)/8;
+    followLayout.itemSize = CGSizeMake(itemW, itemH);
+    followLayout.minimumLineSpacing = 0;
+    followLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    
+    _collectionView = [[UICollectionView alloc]
+                       initWithFrame:CGRectMake(17,
+                                                3,
+                                                self.frame.size.width-34,
+                                                itemH)
+                       collectionViewLayout:followLayout];
+    _collectionView.dataSource = (id<UICollectionViewDataSource>)self;
+    [_collectionView registerClass:[UICollectionViewCell class]
+        forCellWithReuseIdentifier:@"cell"];
+    _collectionView.layer.cornerRadius = 8;
+    _collectionView.layer.masksToBounds = YES;
+    [self addSubview:_collectionView];
+    
+    
+    UIView *view = [[UIView alloc] initWithFrame:self.bounds];
+    view.backgroundColor = [UIColor clearColor];
+    [self addSubview:view];
+    _progressView = [UIImageView new];
+    _progressView.backgroundColor = [UIColor whiteColor];
+    _progressView.layer.cornerRadius = 2;
+    _progressView.layer.masksToBounds = YES;
+    _progressView.frame = CGRectMake(self.frame.size.width/2-2, 0, 4, CGRectGetHeight(self.frame));
+    [view addSubview:_progressView];
+    
+    UIImageView *leftImg = [[UIImageView alloc] initWithFrame:CGRectMake(5, 25, 7.1, 7.9)];
+    leftImg.image = [UIImage imageNamed:@"left_indicator"];
+    [view addSubview:leftImg];
+    
+    UIImageView *rightImg = [[UIImageView alloc] initWithFrame:CGRectMake(view.bounds.size.width-5-7.9, 25, 7.1, 7.9)];
+    rightImg.image = [UIImage imageNamed:@"right_indicator"];
+    [view addSubview:rightImg];
 }
 
 - (void)parseAsset {
@@ -81,27 +102,27 @@
   array[0] = [NSValue valueWithCMTime:CMTimeMake(0.1 * 1000, 1000)];
   __weak typeof(self)weakSelf = self;
   __block int index = 0;
-  [self.imageGenerator
-      generateCGImagesAsynchronouslyForTimes:array
-                           completionHandler:^(
-                               CMTime requestedTime, CGImageRef _Nullable image,
-                               CMTime actualTime,
-                               AVAssetImageGeneratorResult result,
-                               NSError *_Nullable error) {
-                             if (result == AVAssetImageGeneratorSucceeded) {
-                               UIImage *img =
-                                   [[UIImage alloc] initWithCGImage:image];
-                               dispatch_async(dispatch_get_main_queue(), ^{
-                                 [weakSelf.imagesArray addObject:img];
-                                 NSIndexPath *indexPath =
-                                     [NSIndexPath indexPathForItem:index
-                                                         inSection:0];
-                                 [weakSelf.collectionView
-                                     insertItemsAtIndexPaths:@[ indexPath ]];
-                                 index++;
-                               });
-                             }
-                           }];
+    [self.imageGenerator
+     generateCGImagesAsynchronouslyForTimes:array
+     completionHandler:^(
+                         CMTime requestedTime, CGImageRef _Nullable image,
+                         CMTime actualTime,
+                         AVAssetImageGeneratorResult result,
+                         NSError *_Nullable error) {
+        if (result == AVAssetImageGeneratorSucceeded) {
+            UIImage *img =
+            [[UIImage alloc] initWithCGImage:image];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf.imagesArray addObject:img];
+                NSIndexPath *indexPath =
+                [NSIndexPath indexPathForItem:index
+                                    inSection:0];
+                [weakSelf.collectionView
+                 insertItemsAtIndexPaths:@[ indexPath ]];
+                index++;
+            });
+        }
+    }];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -153,7 +174,8 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   UITouch *touch = (UITouch *)[touches anyObject];
   CGPoint point = [touch locationInView:self.collectionView];
-  CGFloat percent = point.x / CGRectGetWidth(self.frame);
+    CGFloat collectionViewWidth = self.frame.size.width-34;
+  CGFloat percent = point.x / collectionViewWidth;
   if (percent < 0) {
     percent = 0;
   } else if (percent > 1) {
@@ -167,14 +189,19 @@
                      [self->_delegate pickViewDidUpdateImage:self->_selectedImage];
                      self->_imageCaptured = YES;
                  });
-  self.progressView.center = CGPointMake(CGRectGetWidth(self.frame) * percent,
+  self.progressView.center = CGPointMake(collectionViewWidth * percent,
                                          CGRectGetHeight(self.frame) / 2);
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   UITouch *touch = (UITouch *)[touches anyObject];
   CGPoint point = [touch locationInView:self.collectionView];
-  CGFloat percent = point.x / CGRectGetWidth(self.frame);
+    CGFloat collectionViewWidth = self.frame.size.width-17;
+  CGFloat percent = point.x / collectionViewWidth;
+    NSLog(@"point--%f",point.x);
+    if (point.x < 17) {
+        percent = 17/collectionViewWidth;
+    }
   if (percent < 0) {
     percent = 0;
   } else if (percent > 1) {
@@ -190,14 +217,18 @@
             self->_imageCaptured = YES;
         });
   }
-  self.progressView.center = CGPointMake(CGRectGetWidth(self.frame) * percent,
+  self.progressView.center = CGPointMake(collectionViewWidth * percent,
                                          CGRectGetHeight(self.frame) / 2);
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   UITouch *touch = (UITouch *)[touches anyObject];
   CGPoint point = [touch locationInView:self.collectionView];
-  CGFloat percent = point.x / CGRectGetWidth(self.frame);
+    CGFloat collectionViewWidth = self.frame.size.width-17;
+  CGFloat percent = point.x / collectionViewWidth;
+    if (point.x < 17) {
+        percent = 17/collectionViewWidth;
+    }
   if (percent < 0) {
     percent = 0;
   } else if (percent > 1) {
@@ -209,7 +240,7 @@
                      self->_selectedImage = [self coverImageAtTime:time];
                      [self->_delegate pickViewDidUpdateImage:self->_selectedImage];
                  });
-  self.progressView.center = CGPointMake(CGRectGetWidth(self.frame) * percent,
+  self.progressView.center = CGPointMake(collectionViewWidth * percent,
                                          CGRectGetHeight(self.frame) / 2);
 }
 

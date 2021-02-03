@@ -109,8 +109,8 @@
 - (void)shouldExpand:(BOOL)expand{
     if (expand) {
         self.imageView.hidden = NO;
-        self.titleLabel.textColor = [AlivcUIConfig shared].kAVCThemeColor;
-        self.artistLabel.textColor = [AlivcUIConfig shared].kAVCThemeColor;
+        self.titleLabel.textColor = [AlivcUIConfig shared].secondThemeColor;
+        self.artistLabel.textColor = [AlivcUIConfig shared].secondThemeColor;
     }else {
         self.imageView.hidden = YES;
         self.titleLabel.textColor = [UIColor whiteColor];

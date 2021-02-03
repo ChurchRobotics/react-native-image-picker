@@ -32,7 +32,8 @@ static AlivcUIConfig *sharedIns = nil;
     self = [super init];
     if (self) {
         _kAVCBackgroundColor = [UIColor colorWithHexString:@"1e222d"];
-        _kAVCThemeColor = [UIColor colorWithHexString:@"00c1de"];
+        _kAVCThemeColor = [UIColor colorWithHexString:@"#651FFF"];
+        _secondThemeColor = [UIColor colorWithHexString:@"#FF396E"];
     }
     return self;
 }

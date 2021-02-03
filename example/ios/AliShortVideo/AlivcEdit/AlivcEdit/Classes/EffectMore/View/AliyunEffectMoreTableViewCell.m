@@ -93,7 +93,7 @@
         [self.funcButton setImage:[AlivcImage imageNamed:@"shortVideo_edit_downloadSuccess"] forState:UIControlStateNormal];
     } else if (buttontType == EffectTableViewButtonDownload){
         
-        self.funcButton.backgroundColor = AlivcOxRGB(0x00c1de);
+        self.funcButton.backgroundColor = AlivcOxRGB(0x651FFF);
         [self.funcButton setTitle:NSLocalizedString(@"下载" , nil) forState:(UIControlStateNormal)];
          [self.funcButton setImage:nil forState:UIControlStateNormal];
     } else {

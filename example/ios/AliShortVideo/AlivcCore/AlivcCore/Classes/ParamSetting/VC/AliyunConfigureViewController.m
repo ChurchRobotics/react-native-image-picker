@@ -157,7 +157,7 @@
     
     button.titleLabel.font = [UIFont systemFontOfSize:16];
     [button addTarget:self action:@selector(buttonNextClick) forControlEvents:UIControlEventTouchUpInside];
-    button.backgroundColor = AlivcOxRGB(0x00c1de);
+    button.backgroundColor = AlivcOxRGB(0x651FFF);
     [self.backButton setImage:[AlivcImage imageNamed:@"back"] forState:UIControlStateNormal];
     [self.view addSubview:button];
 

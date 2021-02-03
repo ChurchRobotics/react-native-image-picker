@@ -23,7 +23,7 @@
 @property (strong, nonatomic, readonly) UIColor *kAVCThemeColor;
 
 
-
+@property (strong, nonatomic, readonly) UIColor *secondThemeColor;
 
 
 

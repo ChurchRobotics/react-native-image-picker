@@ -8,6 +8,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Alert,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {NativeModules} from 'react-native';
@@ -23,6 +24,7 @@ export default class App extends React.Component {
 
     this.selectPhotoTapped = this.selectPhotoTapped.bind(this);
     this.selectVideoTapped = this.selectVideoTapped.bind(this);
+    this.exportVideoTapped = this.exportVideoTapped.bind(this);
   }
 
   selectPhotoTapped() {
@@ -35,7 +37,7 @@ export default class App extends React.Component {
       },
     };
 
-    ImagePicker.showImagePicker(options, response => {
+    ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
 
       if (response.didCancel) {
@@ -54,7 +56,7 @@ export default class App extends React.Component {
           avatarSource: source,
         });
       }
-    });    
+    });
   }
 
   selectVideoTapped() {
@@ -86,11 +88,31 @@ export default class App extends React.Component {
       '送给 刘仙小仙女\n\n刘仙小仙女，你好！你的朋友胖大星希望给你送一份祝福。刘仙小仙女，你好！你的朋友胖大星希望给你送一份祝福。刘仙小仙女，你好！你的朋友胖大星希望给你送一份祝福。',
     );
   }
+  exportVideoTapped() {
+    const PYShortVideoBridge = NativeModules.PYShortVideoBridge;
+    PYShortVideoBridge.passArrayBackToRN((error, events) => {
+      console.log(events);
+      Alert.alert(
+        'Alert Title',
+        events[0],
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        {cancelable: false},
+      );
+    });
+    
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+        <TouchableOpacity onPress={this.selectPhotoTapped}>
           <View
             style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
             {this.state.avatarSource === null ? (
@@ -101,9 +123,21 @@ export default class App extends React.Component {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={this.selectVideoTapped.bind(this)}>
-          <View style={[styles.avatar, styles.avatarContainer]}>
+        <TouchableOpacity onPress={this.selectVideoTapped}>
+          <View
+            style={[
+              styles.avatar,
+              styles.avatarContainer,
+              {borderColor: '#651FFF', color:'#fff'},
+            ]}>
             <Text>Select a Video</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={this.exportVideoTapped}>
+          <View
+            style={[styles.avatar, styles.avatarContainer, {marginTop: 20}]}>
+            <Text>export video</Text>
           </View>
         </TouchableOpacity>
 

@@ -48,7 +48,7 @@
 -(UIView *)tagLine{
     if (!_tagLine) {
         _tagLine = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetWidth(self.bounds)/4, CGRectGetHeight(self.frame)+5, CGRectGetWidth(self.contentView.frame)/2, 2)];
-        _tagLine.backgroundColor = AlivcOxRGB(0x00C1DE);
+        _tagLine.backgroundColor = AlivcOxRGB(0x651FFF);
         _tagLine.hidden = YES;
     }
     return _tagLine;

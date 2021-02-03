@@ -8,6 +8,7 @@
 
 #import "AliyunPublishTopView.h"
 #import "AVC_ShortVideo_Config.h"
+#import <AlivcCommon/UIColor+AlivcHelper.h>
 @implementation AliyunPublishTopView
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -30,7 +31,8 @@
 
   UIView *topView = [[UIView alloc] init];
   topView.frame = CGRectMake(0, 0, ScreenWidth, self.frame.size.height);
-  topView.backgroundColor = [AliyunIConfig config].backgroundColor;
+//  topView.backgroundColor = [AliyunIConfig config].backgroundColor;
+    topView.backgroundColor = [UIColor colorWithHexString:@"#111111"];
   ;
   [self addSubview:topView];
 
@@ -58,14 +60,18 @@
   [topView addSubview:self.nameLabel];
 
   UIButton *nextButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-  nextButton.frame = CGRectMake(ScreenWidth - 44 - 4, StatusBarHeight, 44, 44);
+  nextButton.frame = CGRectMake(ScreenWidth - 70 - 4, StatusBarHeight, 70, 44);
   [nextButton setTitle:NSLocalizedString(@"finish_subtitle_edit", nil)
               forState:(UIControlStateNormal)];
   [nextButton setTitleColor:[UIColor whiteColor]
                    forState:(UIControlStateNormal)];
   [nextButton setTitleColor:rgba(110, 118, 139, 1)
                    forState:(UIControlStateDisabled)];
-  nextButton.titleLabel.font = [UIFont systemFontOfSize:14.f];
+    if (@available(iOS 8.2, *)) {
+        nextButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
+    } else {
+        nextButton.titleLabel.font = [UIFont systemFontOfSize:15];
+    }
   nextButton.titleLabel.textAlignment = NSTextAlignmentCenter;
   [nextButton addTarget:self
                  action:@selector(nextButtonAction)

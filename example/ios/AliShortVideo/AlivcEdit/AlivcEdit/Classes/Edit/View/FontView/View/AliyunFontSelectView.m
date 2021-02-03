@@ -148,7 +148,7 @@
     AliyunEffectFontInfo *font = self.dataSource[row];
     lab.text = font.name;
     if (self.selectedIndex == row) {
-        lab.textColor = AlivcOxRGB(0x00C1DE);
+        lab.textColor = AlivcOxRGB(0x651FFF);
         lab.font = [UIFont systemFontOfSize:22];
     }else{
         lab.font = [UIFont systemFontOfSize:18];
@@ -163,7 +163,7 @@
     {
         if (speartorView.frame.size.height < 1)//取出分割线view
         {
-            speartorView.backgroundColor = AlivcOxRGBA(0x00C1DE,0.7);//改变分割线颜色
+            speartorView.backgroundColor = AlivcOxRGBA(0x651FFF,0.7);//改变分割线颜色
         }
     }
 }

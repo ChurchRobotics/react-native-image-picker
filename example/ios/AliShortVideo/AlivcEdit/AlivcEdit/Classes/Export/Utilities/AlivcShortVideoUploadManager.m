@@ -184,7 +184,13 @@ static AliyunVodPublishManager *_uploadManager = nil;
 - (void)startUploadVideo{
     _newStatus = AlivcUploadStatusUploading;
     __weak typeof(self)weakSelf = self;
-    [AliyunSVideoApi getVideoUploadAuthWithWithToken:[AliVideoClientUser shared].token title:_videoInfo.title filePath:self.videoPath coverURL:self.coverImageUrl desc:_videoInfo.desc tags:_videoInfo.tags handler:^(NSString * _Nullable uploadAddress, NSString * _Nullable uploadAuth, NSString * _Nullable videoId, NSError * _Nullable error) {
+    [AliyunSVideoApi getVideoUploadAuthWithWithToken:[AliVideoClientUser shared].token
+                                               title:_videoInfo.title
+                                            filePath:self.videoPath
+                                            coverURL:self.coverImageUrl
+                                                desc:_videoInfo.desc
+                                                tags:_videoInfo.tags
+                                             handler:^(NSString * _Nullable uploadAddress, NSString * _Nullable uploadAuth, NSString * _Nullable videoId, NSError * _Nullable error) {
         if (error) {
             NSLog(@"error:获取视频凭证%@", error.description);
             weakSelf.newStatus = AlivcUploadStatusFailure;

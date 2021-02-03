@@ -10,6 +10,8 @@
 #import "AVC_ShortVideo_Config.h"
 #import "AliyunCoverPickView.h"
 #import "AliyunPublishTopView.h"
+#import <AlivcCommon/UIColor+AlivcHelper.h>
+
 @interface AliyunCoverPickViewController () <AliyunPublishTopViewDelegate,
                                              AliyunCoverPickViewDelegate>
 @property(nonatomic, strong) AliyunPublishTopView *topView;
@@ -43,33 +45,49 @@
   self.topView.delegate = self;
   [self.view addSubview:self.topView];
 
-  CGFloat pickWith = ScreenWidth - 56;
-  CGFloat factor = _outputSize.height / _outputSize.width;
-  CGFloat width = ScreenWidth;
-  CGFloat heigt = ScreenWidth * factor;
-  CGFloat maxheight =
-      ScreenHeight - StatusBarHeight - 69 - SafeBottom - pickWith / 8 - 30;
+  CGFloat pickWith = ScreenWidth - 72;
+//  CGFloat factor = _outputSize.height / _outputSize.width;
+  CGFloat width = ScreenWidth - 72;
+//  CGFloat heigt = ScreenWidth * factor;
+//  CGFloat maxheight =
+//      ScreenHeight - StatusBarHeight - 69 - SafeBottom - pickWith / 8 - 30;
+//
+//  if (heigt > maxheight) {
+//    heigt = maxheight;
+//    width = heigt / factor;
+//  }
+//  CGFloat offset = (maxheight - heigt) / 2;
 
-  if (heigt > maxheight) {
-    heigt = maxheight;
-    width = heigt / factor;
-  }
-  CGFloat offset = (maxheight - heigt) / 2;
-
-  self.coverView = [[UIImageView alloc]
-      initWithFrame:CGRectMake((ScreenWidth - width) / 2,
-                               StatusBarHeight + 44 + offset, width, heigt)];
-  [self.view addSubview:self.coverView];
-
-  self.pickView = [[AliyunCoverPickView alloc]
-      initWithFrame:CGRectMake(28,
-                               ScreenHeight - SafeBottom - pickWith / 8 - 30,
-                               pickWith, pickWith / 8)];
-  self.pickView.delegate = self;
-  self.pickView.videoPath = _videoPath;
-  self.pickView.outputSize = _outputSize;
-  [self.view addSubview:self.pickView];
-  self.view.backgroundColor = [AliyunIConfig config].backgroundColor;
+    self.coverView = [[UIImageView alloc]
+                      initWithFrame:CGRectMake(36,
+                                               SafeTop+69,
+                                               width,
+                                               ScreenHeight - SafeTop - 79 - SafeBottom - 139)];
+    self.coverView.layer.cornerRadius = 20;
+    self.coverView.layer.masksToBounds = YES;
+    [self.view addSubview:self.coverView];
+    
+    self.pickView = [[AliyunCoverPickView alloc]
+                     initWithFrame:CGRectMake(36,
+                                              ScreenHeight - SafeBottom - 24 - 58,
+                                              pickWith,
+                                              58)];
+    self.pickView.delegate = self;
+    self.pickView.videoPath = _videoPath;
+    self.pickView.outputSize = _outputSize;
+    [self.view addSubview:self.pickView];
+    //  self.view.backgroundColor = [AliyunIConfig config].backgroundColor;
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#111111"];
+    
+    UILabel *pickerTitleLb = [[UILabel alloc]
+                              initWithFrame:CGRectMake(36,
+                                                       self.pickView.frame.origin.y - 15 - 16,
+                                                       ScreenWidth-72,
+                                                       16)];
+    pickerTitleLb.text = @"请拖拽指针选择视频封面";
+    pickerTitleLb.textColor = [UIColor whiteColor];
+    pickerTitleLb.font = [UIFont systemFontOfSize:14];
+    [self.view addSubview:pickerTitleLb];
 }
 
 #pragma mark - top view delegate

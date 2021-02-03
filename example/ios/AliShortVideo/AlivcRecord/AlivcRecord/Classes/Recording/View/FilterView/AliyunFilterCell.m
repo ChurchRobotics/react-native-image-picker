@@ -43,7 +43,7 @@
     [super awakeFromNib];
     _imageView.layer.cornerRadius = 25;
     _imageView.layer.masksToBounds = YES;
-    _imageView.layer.borderColor = AlivcOxRGB(0x00c1de).CGColor;
+    _imageView.layer.borderColor = AlivcOxRGB(0x651FFF).CGColor;
     
 
     self.downloadImageView.backgroundColor = [UIColor clearColor];

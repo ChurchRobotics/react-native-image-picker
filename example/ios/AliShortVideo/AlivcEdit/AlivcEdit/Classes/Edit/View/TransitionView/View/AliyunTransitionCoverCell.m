@@ -23,7 +23,7 @@
 -(void)selectedLayoutCover:(AliyunTransitionCover *)cover{
     UIView *borderView = [[UIView alloc]initWithFrame:CGRectMake(10, 0, 40, 40)];
     borderView.backgroundColor = [UIColor clearColor];
-    borderView.layer.borderColor = [UIColor colorWithHexString:@"#00C1DE"].CGColor;
+    borderView.layer.borderColor = [UIColor colorWithHexString:@"#651FFF"].CGColor;
     borderView.layer.borderWidth = 1.5;
     [self.contentView addSubview:borderView];
     CGFloat width = cover.type == 0 ? 30 : 20;

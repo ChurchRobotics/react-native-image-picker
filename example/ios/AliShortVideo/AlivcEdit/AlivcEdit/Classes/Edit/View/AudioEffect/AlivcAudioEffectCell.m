@@ -47,7 +47,7 @@
     selectedBtn =[[UIButton alloc]initWithFrame:iconView.bounds];
     [selectedBtn setImage:[AlivcImage imageNamed:@"shortVideo_edit_affirm"] forState:UIControlStateNormal];
     selectedBtn.hidden= YES;
-    selectedBtn.backgroundColor =[UIColor colorWithHexString:@"#00C1DE"];
+    selectedBtn.backgroundColor =[UIColor colorWithHexString:@"#651FFF"];
     [iconView addSubview:selectedBtn];
     
     titleLab =[[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(iconView.frame), CGRectGetWidth(self.frame), CGRectGetHeight(self.frame)-CGRectGetMaxY(iconView.frame))];

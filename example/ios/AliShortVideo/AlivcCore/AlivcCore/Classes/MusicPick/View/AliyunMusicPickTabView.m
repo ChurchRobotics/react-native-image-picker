@@ -38,7 +38,7 @@
     self.backgroundColor = [UIColor clearColor];
     self.indicator = [[UIView alloc] init];
     self.indicator.frame = CGRectMake(0, CGRectGetHeight(self.frame)-3, 30, 3);
-    self.indicator.backgroundColor = [AlivcUIConfig shared].kAVCThemeColor;
+    self.indicator.backgroundColor = [AlivcUIConfig shared].secondThemeColor;
     [self addSubview:self.indicator];
     self.indicator.center = CGPointMake(ScreenWidth / 4, self.indicator.center.y);
     

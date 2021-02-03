@@ -61,7 +61,7 @@ static CGFloat AlivcBottomMenuHeaderViewHeight = 45;
             _flagView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, 30, 2)];
             _flagView.hidden = !_showSelectedFlag;
             [self addSubview:_flagView];
-            _flagView.backgroundColor =[UIColor colorWithHexString:@"#00C1DE"];
+            _flagView.backgroundColor =[UIColor colorWithHexString:@"#651FFF"];
             _flagView.center = CGPointMake(btn.center.x, CGRectGetHeight(self.frame)-CGRectGetHeight(_flagView.frame)/2);
         }
         btn.titleLabel.font =[UIFont systemFontOfSize:14];

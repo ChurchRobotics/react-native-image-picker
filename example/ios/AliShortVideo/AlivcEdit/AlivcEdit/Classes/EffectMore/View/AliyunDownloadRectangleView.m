@@ -59,7 +59,7 @@
     // 绘制进度
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextAddRect(ctx, CGRectMake(0, 0, rect.size.width*_percentage, rect.size.height));
-    CGContextSetFillColor(ctx, CGColorGetComponents([AlivcOxRGB(0x00c1de) CGColor]));
+    CGContextSetFillColor(ctx, CGColorGetComponents([AlivcOxRGB(0x651FFF) CGColor]));
     CGContextFillPath(ctx);
     
 }

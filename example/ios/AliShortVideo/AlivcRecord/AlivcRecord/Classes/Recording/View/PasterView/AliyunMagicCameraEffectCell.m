@@ -25,7 +25,7 @@
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
         self.imageView.clipsToBounds = YES;
         [self addSubview:self.imageView];
-        _imageView.layer.borderColor = AlivcOxRGB(0x00c1de).CGColor;
+        _imageView.layer.borderColor = AlivcOxRGB(0x651fff).CGColor;
         
         self.backgroundColor =[UIColor clearColor];
         
@@ -49,7 +49,7 @@
     if (isHidden) {
         self.imageView.layer.borderColor = [UIColor clearColor].CGColor;
     } else {
-        _imageView.layer.borderColor = AlivcOxRGB(0x00c1de).CGColor;
+        _imageView.layer.borderColor = AlivcOxRGB(0x651fff).CGColor;
     }
 }
 

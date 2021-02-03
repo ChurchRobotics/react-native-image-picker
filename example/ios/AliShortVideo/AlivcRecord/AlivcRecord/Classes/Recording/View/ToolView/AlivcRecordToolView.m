@@ -40,8 +40,10 @@
     [_clickBtn setTitle:[@"单击拍" localString] forState:UIControlStateNormal];
     _clickBtn.titleLabel.font =[UIFont systemFontOfSize:14];
     [_clickBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+    
     [_holdBtn setTitle:[@"长按拍" localString] forState:UIControlStateNormal];
     _holdBtn.titleLabel.font =[UIFont systemFontOfSize:14];
+    [_holdBtn setHidden:YES];
     [_holdBtn setTitleColor:[UIColor colorWithWhite:1 alpha:0.5] forState:UIControlStateNormal];
     [_holdBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
     

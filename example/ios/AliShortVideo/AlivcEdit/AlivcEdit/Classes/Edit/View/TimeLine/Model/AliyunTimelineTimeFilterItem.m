@@ -14,7 +14,7 @@
 {
     self = [super init];
     if (self) {
-        _displayColor = [UIColor colorWithHexString:@"0x3CF2FF" alpha:0.7];
+        _displayColor = [UIColor colorWithHexString:@"0x651fff" alpha:0.4];
         
     }
     return self;

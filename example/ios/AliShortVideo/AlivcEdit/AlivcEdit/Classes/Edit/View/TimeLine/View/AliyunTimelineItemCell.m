@@ -42,7 +42,7 @@
         self.greyView = [[UIView alloc] initWithFrame:CGRectZero];
         [self addSubview:self.greyView];
 //        self.greyView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:.4];
-        self.greyView.backgroundColor = AlivcOxRGBA(0x3CF2FF, 0.7);
+        self.greyView.backgroundColor = AlivcOxRGBA(0x651fff, 0.4);
         self.greyView.hidden = YES;
     }
     return self;
@@ -62,7 +62,7 @@
         CGFloat width = (percent.rightPercent - percent.leftPercent) * self.bounds.size.width;
         CGRect frame = CGRectMake(x, 0, width, CGRectGetHeight(self.bounds));
         UIView *greyview = [[UIView alloc] initWithFrame:frame];
-        greyview.backgroundColor = AlivcOxRGBA(0x3CF2FF, 0.7);
+        greyview.backgroundColor = AlivcOxRGBA(0x651fff, 0.4);
 //        greyview.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:.4];
         [self addSubview:greyview];
         [self.greyViews addObject:greyview];

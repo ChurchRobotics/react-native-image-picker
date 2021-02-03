@@ -16,6 +16,8 @@
 #import "QUProgressView.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "NSString+AlivcHelper.h"
+#import <AlivcCommon/UIColor+AlivcHelper.h>
+#import "PYOutputVideoInfo.h"
 
 @interface AlivcExportViewController () <
 AliyunPublishTopViewDelegate, AliyunIExporterCallback, UITextFieldDelegate>
@@ -121,66 +123,81 @@ AliyunPublishTopViewDelegate, AliyunIExporterCallback, UITextFieldDelegate>
     [self.topView.cancelButton setImage:[AlivcImage imageNamed:@"back"]
                                forState:UIControlStateNormal];
     [self.topView.cancelButton setTitle:nil forState:UIControlStateNormal];
-    [self.topView.finishButton setTitle:NSLocalizedString(@"发布" , nil) forState:UIControlStateNormal];
+    [self.topView.finishButton setTitle:NSLocalizedString(@"使用视频" , nil) forState:UIControlStateNormal];
     _topView.finishButton.enabled = NO;
     self.topView.delegate = self;
     [self.containerView addSubview:self.topView];
     
     // middle
-    self.backgroundView =
-    [[UIImageView alloc] initWithFrame:CGRectMake(0, StatusBarHeight + 44,
-                                                  ScreenWidth, ScreenWidth)];
-    self.backgroundView.image = self.backgroundImage;
-    self.backgroundView.userInteractionEnabled = YES;
-    [self.containerView addSubview:self.backgroundView];
-    UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    UIVisualEffectView *effectView =
-    [[UIVisualEffectView alloc] initWithEffect:effect];
-    [self.backgroundView addSubview:effectView];
-    effectView.frame = CGRectMake(0, 0, ScreenWidth, ScreenWidth);
+//    self.backgroundView =
+//    [[UIImageView alloc] initWithFrame:CGRectMake(0, StatusBarHeight + 44,
+//                                                  ScreenWidth, ScreenWidth)];
+//    self.backgroundView.image = self.backgroundImage;
+//
+//
+//    self.backgroundView.userInteractionEnabled = YES;
+//    [self.containerView addSubview:self.backgroundView];
+//    UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+//    UIVisualEffectView *effectView =
+//    [[UIVisualEffectView alloc] initWithEffect:effect];
+//    [self.backgroundView addSubview:effectView];
+//    effectView.frame = CGRectMake(0, 0, ScreenWidth, ScreenWidth);
     
     // pick
-    CGFloat length = ScreenWidth * 3 / 4.0f;
+//    CGFloat length = ScreenWidth * 3 / 4.0f;
+    CGFloat length = ScreenWidth-72;
     CGFloat ratio = _outputSize.width / _outputSize.height;
+    NSLog(@"_outputSize:%f---%f",_outputSize.width,_outputSize.height);
     CGFloat coverWidth, coverHeight = 0;
-    if (ratio > 1) {
-        coverWidth = length;
-        coverHeight = coverWidth / ratio;
-    } else {
-        coverHeight = length;
-        coverWidth = length * ratio;
-    }
+    coverWidth = length;
+    coverHeight = coverWidth / ratio;
+//    if (ratio > 1) {
+//        coverWidth = length;
+//        coverHeight = coverWidth / ratio;
+//    } else {
+//        coverHeight = length;
+//        coverWidth = length * ratio;
+//    }
     self.coverImageView = [[UIImageView alloc]
                            initWithFrame:CGRectMake(0, 0, coverWidth, coverHeight)];
-    self.coverImageView.center = CGPointMake(ScreenWidth / 2, ScreenWidth / 2);
+    self.coverImageView.layer.cornerRadius = 20;
+    self.coverImageView.layer.masksToBounds = YES;
+//    self.coverImageView.center = CGPointMake(ScreenWidth / 2, ScreenWidth / 2);
+    self.coverImageView.center = self.containerView.center;
     self.coverImageView.userInteractionEnabled = YES;
-    [effectView.contentView addSubview:self.coverImageView];
+//    [effectView.contentView addSubview:self.coverImageView];
+    [self.containerView addSubview:self.coverImageView];
     
     self.pickButton =
-    [[UIButton alloc] initWithFrame:CGRectMake((coverWidth - 120) / 2,
-                                               coverHeight - 46, 120, 36)];
-    self.pickButton.backgroundColor = rgba(0, 0, 0, 0.5);
-    self.pickButton.layer.cornerRadius = 2;
-    self.pickButton.layer.masksToBounds = YES;
+    [[UIButton alloc] initWithFrame:CGRectMake(0,
+                                               coverHeight - 48,
+                                               coverWidth,
+                                               48)];
+    self.pickButton.backgroundColor = rgba(0, 0, 0, 0.68);
+//    self.pickButton.layer.cornerRadius = 2;
+//    self.pickButton.layer.masksToBounds = YES;
     [self.pickButton setTitleColor:[UIColor whiteColor]
                           forState:UIControlStateNormal];
-    NSMutableAttributedString *attributedString =
-    [[NSMutableAttributedString alloc] init];
     
-    NSTextAttachment *textAttachment = [[NSTextAttachment alloc] init];
-    textAttachment.image = [AliyunImage imageNamed:@"icon_cover"];
-    NSAttributedString *attrStringWithImage =
-    [NSAttributedString attributedStringWithAttachment:textAttachment];
-    [attributedString appendAttributedString:attrStringWithImage];
+//    NSMutableAttributedString *attributedString =
+//    [[NSMutableAttributedString alloc] init];
+//
+//    NSTextAttachment *textAttachment = [[NSTextAttachment alloc] init];
+//    textAttachment.image = [AliyunImage imageNamed:@"icon_cover"];
+//    NSAttributedString *attrStringWithImage =
+//    [NSAttributedString attributedStringWithAttachment:textAttachment];
+//    [attributedString appendAttributedString:attrStringWithImage];
+//
+//    NSAttributedString *appendString = [[NSAttributedString alloc]
+//                                        initWithString:NSLocalizedString(@"选择封面", nil)
+//                                        attributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+//    [attributedString appendAttributedString:appendString];
+//
+//    [self.pickButton setAttributedTitle:attributedString
+//                               forState:UIControlStateNormal];
     
-    NSAttributedString *appendString = [[NSAttributedString alloc]
-                                        initWithString:NSLocalizedString(@"选择封面", nil)
-                                        attributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    [attributedString appendAttributedString:appendString];
-    
-    [self.pickButton setAttributedTitle:attributedString
-                               forState:UIControlStateNormal];
-    [self.pickButton.titleLabel setFont:[UIFont systemFontOfSize:12]];
+    [self.pickButton setTitle:NSLocalizedString(@"选择封面", nil) forState:UIControlStateNormal];
+    [self.pickButton.titleLabel setFont:[UIFont systemFontOfSize:15]];
     [self.pickButton addTarget:self
                         action:@selector(pickButtonClicked)
               forControlEvents:UIControlEventTouchUpInside];
@@ -188,13 +205,16 @@ AliyunPublishTopViewDelegate, AliyunIExporterCallback, UITextFieldDelegate>
     self.coverImageView.hidden = YES;
     // progress
     self.publishProgressView = [[AliyunPublishProgressView alloc]
-                                initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenWidth)];
-    [effectView.contentView addSubview:self.publishProgressView];
-    self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 4)];
+                                initWithFrame:CGRectMake(0, SafeTop+60, ScreenWidth, ScreenWidth)];
+//    [effectView.contentView addSubview:self.publishProgressView];
+    [self.containerView addSubview:self.publishProgressView];
+    self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, SafeTop+60, ScreenWidth, 4)];
     self.progressView.backgroundColor = rgba(0, 0, 0, 0.6);
     self.progressView.progressTintColor = [AliyunIConfig config].timelineTintColor;
-    effectView.userInteractionEnabled = YES;
-    [effectView.contentView addSubview:self.progressView];
+//    effectView.userInteractionEnabled = YES;
+//    [effectView.contentView addSubview:self.progressView];
+    self.containerView.userInteractionEnabled = YES;
+    [self.containerView addSubview:self.progressView];
     
     // bottom
     self.titleView = [[UITextField alloc]
@@ -212,23 +232,23 @@ AliyunPublishTopViewDelegate, AliyunIExporterCallback, UITextFieldDelegate>
     self.titleView.returnKeyType = UIReturnKeyDone;
     self.titleView.delegate = self;
     self.titleView.backgroundColor = [AliyunIConfig config].backgroundColor;
-    [self.containerView addSubview:self.titleView];
+//    [self.containerView addSubview:self.titleView];
     
     UIView *line = [[UIView alloc]
                     initWithFrame:CGRectMake(20, StatusBarHeight + 44 + ScreenWidth + 52,
                                              ScreenWidth - 40, 1)];
     line.backgroundColor = rgba(90, 98, 120, 1);
-    [self.containerView addSubview:line];
+//    [self.containerView addSubview:line];
     UILabel *label = [[UILabel alloc]
                       initWithFrame:CGRectMake(20, StatusBarHeight + 44 + ScreenWidth + 52 + 4,
                                                ScreenWidth - 40, 14)];
     label.textColor = rgba(110, 118, 139, 1);
     label.text = [@"countoflimit" localString];
     label.font = [UIFont systemFontOfSize:10];
-    [self.containerView addSubview:label];
+//    [self.containerView addSubview:label];
     
     // vc
-    self.view.backgroundColor = [AliyunIConfig config].backgroundColor;
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#111111"];
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
 }
 
@@ -359,12 +379,15 @@ AliyunPublishTopViewDelegate, AliyunIExporterCallback, UITextFieldDelegate>
     NSString *coverPath = [_taskPath stringByAppendingPathComponent:@"cover.png"];
     NSData *data = UIImagePNGRepresentation(_image);
     [data writeToFile:coverPath atomically:YES];
-    AliyunUploadViewController *vc = [[AliyunUploadViewController alloc] init];
-    vc.videoPath = _config.outputPath;
-    vc.coverImagePath = coverPath;
-    vc.videoSize = _outputSize;
-    vc.videoTitle = _titleView.text;
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    NSLog(@"--- %@ -- %@",_config.outputPath, coverPath);
+    PYOutputVideoInfo *videoInfo = [PYOutputVideoInfo shared];
+//    AliyunUploadViewController *vc = [[AliyunUploadViewController alloc] init];
+//    vc.videoPath = _config.outputPath;
+//    vc.coverImagePath = coverPath;
+//    vc.videoSize = _outputSize;
+//    vc.videoTitle = _titleView.text;
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - export callback

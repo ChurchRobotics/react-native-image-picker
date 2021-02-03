@@ -76,7 +76,7 @@
     self.titleLabel.text = _transitionIcon.text;
     if (_transitionIcon.isSelect) {
         [self.iconImage setImage:_transitionIcon.imageSel];
-        [bgView setImage:[UIImage avc_imageWithColor:AlivcOxRGB(0x00C1DE) size:CGSizeMake(transitionBGViewSize, transitionBGViewSize)]];
+        [bgView setImage:[UIImage avc_imageWithColor:AlivcOxRGB(0x651FFF) size:CGSizeMake(transitionBGViewSize, transitionBGViewSize)]];
     } else {
         [self.iconImage setImage:_transitionIcon.image];
         [bgView setImage:[UIImage avc_imageWithColor:AlivcOxRGBA(0xFFFFFF, 0.2) size:CGSizeMake(transitionBGViewSize, transitionBGViewSize)]];

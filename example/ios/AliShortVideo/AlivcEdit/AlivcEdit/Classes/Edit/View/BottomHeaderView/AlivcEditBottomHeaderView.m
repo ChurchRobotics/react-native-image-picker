@@ -67,8 +67,10 @@
 }
 
 -(void)bindingApplyOnClick:(OnClickBlock)applyOnClick cancelOnClick:(OnClickBlock)cancelOnClick{
-    [_cancelBtn aliyunOnClickBlock:cancelOnClick];
-    [_enterBtn aliyunOnClickBlock:applyOnClick];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_cancelBtn aliyunOnClickBlock:cancelOnClick];
+        [_enterBtn aliyunOnClickBlock:applyOnClick];        
+    });
 }
 
 

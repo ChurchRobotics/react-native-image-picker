@@ -392,7 +392,7 @@ typedef NS_ENUM(NSUInteger, kRunDirection) {
     self.pinchBackgroudView = [[UIImageView alloc] initWithFrame:CGRectMake(self.leftPinchView.frame.origin.x+2, 0, self.rightPinchView.frame.origin.x - self.leftPinchView.frame.origin.x + _rightPinchWidth-6, self.itemHeight)];
     self.pinchBackgroudView.image = pinchBgImage;
 //    self.pinchBackgroudView.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:.2];
-    self.pinchBackgroudView.backgroundColor = AlivcOxRGBA(0x3CF2FF, 0.7);
+    self.pinchBackgroudView.backgroundColor = AlivcOxRGBA(0x651fff, 0.4);
     [self insertSubview:self.pinchBackgroudView belowSubview:self.leftPinchView];
 }
 

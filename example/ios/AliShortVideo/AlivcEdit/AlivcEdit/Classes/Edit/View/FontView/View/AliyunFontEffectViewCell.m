@@ -70,7 +70,7 @@
 -(void)setSelected:(BOOL)selected{
     [super setSelected:selected];
     if (selected) {
-        self.bgView.backgroundColor = AlivcOxRGB(0x00C1DE);
+        self.bgView.backgroundColor = AlivcOxRGB(0x651FFF);
         [self.imageView setImage:_imageSelected];
     }else{
         self.bgView.backgroundColor = AlivcOxRGBA(0xFFFFFF, 0.2);

@@ -33,6 +33,7 @@
 #import "AliyunResourceRequestManager.h"
 #import "AlivcWebViewController.h"
 #import <AliyunVideoSDKPro/AliyunNativeParser.h>
+#import <AlivcCommon/UIColor+AlivcHelper.h>
 
 //缓存远程音乐的文件路径
 #define tmpMusicPath [NSTemporaryDirectory() stringByAppendingString:@"tmpMusicPath"]
@@ -283,7 +284,7 @@
     
     
     self.bottomTextView.attributedText = attributedString;
-    self.bottomTextView.linkTextAttributes = @{NSForegroundColorAttributeName:[AlivcUIConfig shared].kAVCThemeColor};
+    self.bottomTextView.linkTextAttributes = @{NSForegroundColorAttributeName:[AlivcUIConfig shared].secondThemeColor};
     self.bottomTextView.backgroundColor = [UIColor clearColor];
     self.bottomTextView.textAlignment = NSTextAlignmentCenter;
     self.bottomTextView.delegate = self;

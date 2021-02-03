@@ -23,9 +23,24 @@
 }
 
 - (void)setupSubviews{
-    NSArray *titles =@[[@"剪音乐" localString],[@"滤镜" localString],[@"切画幅" localString],[@"特效" localString],[@"拍照" localString]];
-    NSArray *images =@[@"shortVideo_music",@"alivc_svEdit_filter",@"shortVideo_record_switchRatio",@"shortVideo_effectFilter",@"shortVideo_takePhoto"];
-    NSArray *types =@[@(AlivcRecordSlidButtonTypeMusic),@(AlivcRecordSlidButtonTypeFilter),@(AlivcRecordSlidButtonTypeSwitchRatio),@(AlivcRecordSlidButtonTypeSpecialEffects),@(AlivcRecordSlidButtonTypeTakePhoto)];
+    NSArray *titles =@[[@"剪音乐" localString],
+                       [@"滤镜" localString],
+//                       [@"切画幅" localString],
+                       [@"特效" localString],
+//                       [@"拍照" localString]
+    ];
+    NSArray *images =@[@"shortVideo_music",
+                       @"alivc_svEdit_filter",
+//                       @"shortVideo_record_switchRatio",
+                       @"shortVideo_effectFilter",
+//                       @"shortVideo_takePhoto"
+    ];
+    NSArray *types =@[@(AlivcRecordSlidButtonTypeMusic),
+                      @(AlivcRecordSlidButtonTypeFilter),
+//                      @(AlivcRecordSlidButtonTypeSwitchRatio),
+                      @(AlivcRecordSlidButtonTypeSpecialEffects),
+//                      @(AlivcRecordSlidButtonTypeTakePhoto)
+    ];
     CGFloat width = CGRectGetWidth(self.frame);
     for (int i =0; i<titles.count; i++) {
         AlivcButton *btn =[[AlivcButton alloc] initWithButtonType:AlivcButtonTypeTitleBottom];

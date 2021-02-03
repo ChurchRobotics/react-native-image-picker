@@ -64,6 +64,7 @@ AlivcRecordPasterViewDelegate>
 @property (nonatomic, strong) AlivcBottomMenuSpecialFilterView *specialFilterView;
 @property (nonatomic, strong) AlivcRecordFocusView *focusView;          //聚焦框
 @property(nonatomic, strong)  PYTeleprompter *teleprompter; //提词器
+@property(nonatomic, strong)  PYTeleprompter *teleprompterLeft; //提词器
 //data
 @property (nonatomic, strong) AliyunDownloadManager *downloadManager;   //下载管理（动图）
 @property (nonatomic, strong) AliyunResourceManager *resourceManager;   //资源管理（动图）
@@ -76,6 +77,8 @@ AlivcRecordPasterViewDelegate>
 @property (nonatomic, assign) CGFloat recorderDuration; //本地记录的视频录制时长
 
 @property (nonatomic, strong) NSOperationQueue *queue;
+
+@property (nonatomic, assign) MotionRotateOritation oritation; //屏幕旋转方向
 @end
 
 @implementation AliyunMagicCameraViewController
@@ -162,20 +165,21 @@ AlivcRecordPasterViewDelegate>
     [self.view addSubview:self.timerCountLab];
     //添加预览view
     [self.view addSubview:self.recorder.preview];
+    [self.view addSubview:self.teleprompter];
+    [self addTeleprompterLeftView];
     //添加顶部录制进度条
     [self.view addSubview:self.progressView];
     //添加顶部导航条
     _navigationBar =[[AlivcRecordNavigationBar alloc]initWithUIConfig:_uiConfig];
     _navigationBar.delegate =self;
     [self.view addSubview:_navigationBar];
-    [self.view addSubview:self.teleprompter];
+    
     //添加右侧菜单栏
     [self.view addSubview:self.sliderButtonsView];
     //添加底部view
     [self.view addSubview:self.bottomView];
     //提前加载好美颜view，防止在异步线程里惰性加载view
     [self beautyView];
-
 }
 // 监听通知
 - (void)addNotification
@@ -183,44 +187,7 @@ AlivcRecordPasterViewDelegate>
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDelete:) name:AliyunEffectResourceDeleteNotification object:nil];
-    
-//    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange) name:UIDeviceOrientationDidChangeNotification object:nil];
-
 }
-
-- (void)deviceOrientationDidChange
-{
-    NSLog(@"deviceOrientationDidChange:%ld",(long)[UIDevice currentDevice].orientation);
-//    if([UIDevice currentDevice].orientation == UIDeviceOrientationPortrait) {
-//        [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait];
-//        [self orientationChange:NO];
-//        //注意： UIDeviceOrientationLandscapeLeft 与 UIInterfaceOrientationLandscapeRight
-//    } else if ([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeLeft) {
-//        [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeRight];
-//        [self orientationChange:YES];
-//    }
-}
-
-- (void)orientationChange:(BOOL)landscapeRight
-{
-    if (landscapeRight) {
-        [UIView animateWithDuration:0.2f animations:^{
-            self.view.transform = CGAffineTransformMakeRotation(M_PI_2);
-            self.view.bounds = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
-        }];
-    }else {
-        [UIView animateWithDuration:0.2f animations:^{
-            self.view.transform = CGAffineTransformMakeRotation(0);
-            self.view.bounds = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
-        }];
-    }
-}
-
-//- (BOOL)shouldAutorotate
-//{
-//    return NO;
-//}
 
 
 - (void)startNetworkReachability{
@@ -290,6 +257,14 @@ AlivcRecordPasterViewDelegate>
     [self.sliderButtonsView setMusicButtonEnabled:(self.recorderDuration == 0)];
     //更新底部录制view
     [self.bottomView setHidden:self.timerCountLab.isTiming];
+    
+    //更新提词器背景色
+    if ([self.recorder startRecording] == 0) {
+        [self updateTeleprompterViewStatus:false];
+        self.teleprompter.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
+    } else {
+        self.teleprompter.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+    }
 }
 //更新闪光灯按钮状态
 - (void)updateNavigationBarTorchModeStatus{
@@ -319,11 +294,34 @@ AlivcRecordPasterViewDelegate>
 
 - (PYTeleprompter *)teleprompter {
     if (!_teleprompter) {
-        _teleprompter = [[PYTeleprompter alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(self.navigationBar.frame)+40, 100, 200)];
+        CGRect bounds = [[UIScreen mainScreen] bounds];
+        _teleprompter = [[PYTeleprompter alloc] initWithType:TeleprompterTypeUp];
+        _teleprompter.frame = CGRectMake(0, 0, bounds.size.width, 260);
         _teleprompter.word = self.teleprompt;
+        [_teleprompter setHidden:NO];
+       
     }
     return _teleprompter;
 }
+
+-(PYTeleprompter *)teleprompterLeft {
+    if (!_teleprompterLeft) {
+        _teleprompterLeft =[[PYTeleprompter alloc] initWithType:TeleprompterTypeLeft];
+        _teleprompterLeft.frame = CGRectMake(0, 0, ScreenHeight, 120);
+        _teleprompterLeft.center = self.view.center;
+        //增加判断: 提词器的词是否含有可分隔的字符串，如果没有，进行分割会崩溃
+        if ([self.teleprompt containsString:@"\n\n"]) {
+            NSString *noTitleStr = [self.teleprompt componentsSeparatedByString:@"\n\n"][1];
+            _teleprompterLeft.word = noTitleStr;
+        } else {
+            _teleprompterLeft.word = self.teleprompt;
+        }
+        _teleprompterLeft.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+        [_teleprompterLeft setHidden:YES];
+    }
+    return _teleprompterLeft;
+}
+
 - (AliyunIRecorder *)recorder{
     if (!_recorder) {
         //清除之前生成的录制路径
@@ -784,6 +782,9 @@ AlivcRecordPasterViewDelegate>
     _progressView.videoCount = [self partCount];
     //更新录制按钮下方的删除按钮状态
     [self.bottomView updateViewsWithVideoPartCount:[self partCount]];
+    //更新提词器背景色
+    [self updateTeleprompterViewStatus:false];
+    self.teleprompter.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
 }
 
 - (void)recorderDidFinishRecording{
@@ -1026,6 +1027,8 @@ AlivcRecordPasterViewDelegate>
     pinchGesture.scale = 1;
     return;
 }
+
+//MARK:陀螺仪
 - (void)startRetainCameraRotate {
     //初始化全局管理对象
     if (!self.motionManager) {
@@ -1033,6 +1036,7 @@ AlivcRecordPasterViewDelegate>
     }
     if ([self.motionManager isDeviceMotionAvailable]) {
         self.motionManager.deviceMotionUpdateInterval =1;
+        __weak typeof(self) weakSelf = self;
         [self.motionManager startDeviceMotionUpdatesToQueue:self.queue withHandler:^(CMDeviceMotion * _Nullable motion, NSError * _Nullable error) {
             // Gravity 获取手机的重力值在各个方向上的分量，根据这个就可以获得手机的空间位置，倾斜角度等
             double gravityX = motion.gravity.x;
@@ -1040,15 +1044,72 @@ AlivcRecordPasterViewDelegate>
             double xyTheta = atan2(gravityX,gravityY)/M_PI*180.0;//手机旋转角度。
             if (xyTheta >= -45 && xyTheta <= 45) {//down
                 self->_cameraRotate =180;
+//                NSLog(@"---down");
+                weakSelf.oritation = MotionRotateOritationDown;
             } else if (xyTheta > 45 && xyTheta < 135) {//left
                 self->_cameraRotate = 90;
+                if (xyTheta > 80 && xyTheta < 100) {
+                    NSLog(@"---left");
+                    weakSelf.oritation = MotionRotateOritationLeft;
+                }
             } else if ((xyTheta >= 135 && xyTheta < 180) || (xyTheta >= -180 && xyTheta < -135)) {//up
                 self->_cameraRotate = 0;
+                weakSelf.oritation = MotionRotateOritationUp;
+                NSLog(@"---up");
             } else if (xyTheta >= -135 && xyTheta < -45) {//right
                 self->_cameraRotate = 270;
+                if (xyTheta > -100 && xyTheta < -80) {
+//                    NSLog(@"---right");
+                    weakSelf.oritation = MotionRotateOritationRight;
+                }
             }
             //            NSLog(@"手机旋转的角度为 --- %d", _cameraRotate);
         }];
+    }
+}
+
+- (void)addTeleprompterLeftView
+{
+    [self.view addSubview:self.teleprompterLeft];
+    CGFloat angle = -M_PI_2;
+    CGFloat ty =  0;
+    CGFloat tx = -(ScreenWidth-120)/2;
+    self.teleprompterLeft.transform = CGAffineTransformMake(cos(angle), sin(angle), -sin(angle), cos(angle), tx, ty);
+}
+
+-(void)setOritation:(MotionRotateOritation)oritation
+{
+    if (oritation != _oritation) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (oritation == MotionRotateOritationUp) {
+                [self updateTeleprompterFrameStretch:NO];
+            } else  if (oritation == MotionRotateOritationLeft){
+                [self updateTeleprompterFrameStretch:YES];
+            }
+        });
+        
+        _oritation = oritation;
+        NSLog(@"---ori");
+    }
+}
+
+- (void)updateTeleprompterFrameStretch:(BOOL)needStretch
+{
+    if([self.recorder startRecording] == 0){
+        return;
+    }
+    [self updateTeleprompterViewStatus:needStretch];
+}
+
+- (void)updateTeleprompterViewStatus:(BOOL)status
+{
+//    做个兼容处理：如果提词器的字符串为空，则隐藏提词器
+    if (!self.teleprompt || [self.teleprompt isEqualToString:@""]) {
+        [self.teleprompter setHidden:YES];
+        [self.teleprompterLeft setHidden:YES];
+    } else {
+        [self.teleprompter setHidden:status];
+        [self.teleprompterLeft setHidden:!status];
     }
 }
  
@@ -1058,7 +1119,6 @@ AlivcRecordPasterViewDelegate>
       [self.navigationController popViewControllerAnimated:YES];
     });
 }
-  
 
 #pragma mark - 设备旋转
 - (BOOL)shouldAutorotate
@@ -1068,7 +1128,7 @@ AlivcRecordPasterViewDelegate>
 // 竖屏显示
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationLandscapeLeft;
 }
 - (void)dealloc
 {

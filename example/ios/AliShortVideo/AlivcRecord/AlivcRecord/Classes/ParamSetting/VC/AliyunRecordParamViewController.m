@@ -102,7 +102,7 @@
     [button setTitle:NSLocalizedString(@"开启录制界面", nil) forState:0];
     button.titleLabel.font = [UIFont systemFontOfSize:16];
     [button addTarget:self action:@selector(toRecordView) forControlEvents:UIControlEventTouchUpInside];
-    button.backgroundColor = AlivcOxRGB(0x00c1de);
+    button.backgroundColor = AlivcOxRGB(0x651FFF);
     [self.view addSubview:button];
     [self.backButton setImage:[AlivcImage imageNamed:@"back"] forState:UIControlStateNormal];
     self.recordButton = button;

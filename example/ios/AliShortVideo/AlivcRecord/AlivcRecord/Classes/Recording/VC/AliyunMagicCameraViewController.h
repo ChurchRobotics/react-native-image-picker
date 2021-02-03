@@ -13,8 +13,15 @@
 @class AliyunClipManager;
 @class AliyunIRecorder;
  
+
+
 NS_ASSUME_NONNULL_BEGIN
- 
+typedef enum : NSUInteger {
+    MotionRotateOritationUp,
+    MotionRotateOritationDown,
+    MotionRotateOritationLeft,
+    MotionRotateOritationRight
+} MotionRotateOritation;
 
 @interface AliyunMagicCameraViewController : UIViewController
 
@@ -43,6 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 //完成按钮enable的条件 是否是录制时间大于等于最短时间
 - (CGFloat)finishButtonEnabledMinDuration;
 
+@property (nonatomic, assign, readonly) MotionRotateOritation oritation; //屏幕旋转方向
 
 @end
 
