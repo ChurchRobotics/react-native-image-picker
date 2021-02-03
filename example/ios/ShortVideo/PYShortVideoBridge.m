@@ -16,7 +16,7 @@
 #import "PYNavigationController.h"
 #import "AliVideoClientUser.h"
 #import "AlivcShortVideoUploadManager.h"
-#import "PYOutputVideoInfo.h"
+#import <AlivcEdit/PYOutputVideoInfo.h>
 
 #if __has_include(<AliyunVideoSDKPro/AliyunVideoSDKInfo.h>)
 #import <AliyunVideoSDKPro/AliyunVideoSDKInfo.h>

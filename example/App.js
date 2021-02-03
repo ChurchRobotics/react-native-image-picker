@@ -83,6 +83,12 @@ export default class App extends React.Component {
     //     });
     //   }
     // });
+    const userInfo = {
+      avatarUrl: '',
+      token: '',
+      nickName: '',
+      userId:''
+    };
     const PYShortVideoBridge = NativeModules.PYShortVideoBridge;
     PYShortVideoBridge.videoShooting(
       '送给 刘仙小仙女\n\n刘仙小仙女，你好！你的朋友胖大星希望给你送一份祝福。刘仙小仙女，你好！你的朋友胖大星希望给你送一份祝福。刘仙小仙女，你好！你的朋友胖大星希望给你送一份祝福。',
@@ -90,11 +96,12 @@ export default class App extends React.Component {
   }
   exportVideoTapped() {
     const PYShortVideoBridge = NativeModules.PYShortVideoBridge;
-    PYShortVideoBridge.passArrayBackToRN((error, events) => {
-      console.log(events);
+    PYShortVideoBridge.outputVideoInfo((error, videoParams) => {
+      console.log(videoParams);
+      const path = `coverImagePath:${videoParams.coverImageUrl}---videoPath:${videoParams.videoPath}`;
       Alert.alert(
-        'Alert Title',
-        events[0],
+        'show path',
+        path,
         [
           {
             text: 'Cancel',
@@ -106,7 +113,6 @@ export default class App extends React.Component {
         {cancelable: false},
       );
     });
-    
   }
 
   render() {
@@ -128,7 +134,7 @@ export default class App extends React.Component {
             style={[
               styles.avatar,
               styles.avatarContainer,
-              {borderColor: '#651FFF', color:'#fff'},
+              {borderColor: '#651FFF'},
             ]}>
             <Text>Select a Video</Text>
           </View>

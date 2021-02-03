@@ -380,8 +380,11 @@ AliyunPublishTopViewDelegate, AliyunIExporterCallback, UITextFieldDelegate>
     NSData *data = UIImagePNGRepresentation(_image);
     [data writeToFile:coverPath atomically:YES];
     
-    NSLog(@"--- %@ -- %@",_config.outputPath, coverPath);
     PYOutputVideoInfo *videoInfo = [PYOutputVideoInfo shared];
+    [videoInfo setCoverImagePath:coverPath videoTitle:_titleView.text videoSize:_outputSize videoPath:_config.outputPath];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
+    //ToDO:此处是否需要使用原生上传
 //    AliyunUploadViewController *vc = [[AliyunUploadViewController alloc] init];
 //    vc.videoPath = _config.outputPath;
 //    vc.coverImagePath = coverPath;
