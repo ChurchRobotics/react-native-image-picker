@@ -159,7 +159,8 @@
     //美颜参数
     _beautyParams = [self.beautyFaceDataManager_advanced getBeautyParamsOfLevel:[self.beautyFaceDataManager_advanced getBeautyLevel]];
     //当前美颜类型
-    _currentBeautyType = (AlivcBeautySettingViewStyle)[[NSUserDefaults standardUserDefaults] integerForKey:@"shortVideo_beautyType"];
+//    _currentBeautyType = (AlivcBeautySettingViewStyle)[[NSUserDefaults standardUserDefaults] integerForKey:@"shortVideo_beautyType"];
+    _currentBeautyType = AlivcBeautySettingViewStyle_ShortVideo_BeautyFace_Base;
     //美型参数
     if ([AlivcShortVideoRoute shared].currentBeautyType == AlivcBeautyTypeRace) {
         _beautySkinParams = [self.beautyShapeDataManager getBeautyParamsOfLevel:[self.beautyShapeDataManager getBeautyLevel]];
@@ -274,7 +275,8 @@
 }
 
 - (void)settingsViewController:(AlivcLiveBeautifySettingsViewController *)viewController didChangeUIStyle:(AlivcBeautySettingViewStyle)uiStyle{
-    self.currentBeautyType = uiStyle;
+//    self.currentBeautyType = uiStyle;
+    self.currentBeautyType = AlivcBeautySettingViewStyle_ShortVideo_BeautyFace_Base;
     //设置档位
     NSInteger level = (uiStyle == AlivcBeautySettingViewStyle_ShortVideo_BeautyFace_Base ?[self.beautyFaceDataManager_normal getBeautyLevel]:[self.beautyFaceDataManager_advanced getBeautyLevel]);
     [_beatyFaceViewControl updateLevel:level];

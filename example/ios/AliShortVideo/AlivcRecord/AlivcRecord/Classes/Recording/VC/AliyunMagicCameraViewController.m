@@ -401,9 +401,9 @@ AlivcRecordPasterViewDelegate>
         AlivcBottomMenuHeaderViewItem *item3 =[AlivcBottomMenuHeaderViewItem createItemWithTitle:[@"美型" localString] icon:[AlivcImage imageNamed:@"shortVideo_beautySkin"] tag:3];  //race的美型
         NSArray *items;
         if ([[AlivcShortVideoRoute shared] currentBeautyType] == AlivcBeautyTypeFaceUnity) {
-            items =@[item1,item2];
+            items =@[item1];
         }else {
-            items =@[item1,item3];
+            items =@[item1];
         }
         CGFloat safeTop = 78;
         _beautyView =[[AlivcRecordBeautyView alloc]initWithFrame:CGRectMake(0, ScreenHeight-200-safeTop, ScreenWidth, 200+safeTop) withItems:items];
@@ -415,6 +415,7 @@ AlivcRecordPasterViewDelegate>
         }else {
             [_beautyView setLevelViewTitle:@"race"];
         }
+        _beautyView.currentBeautyType = AlivcBeautySettingViewStyle_ShortVideo_BeautyFace_Base;
         [self.view addSubview:_beautyView];
     }
     return _beautyView;

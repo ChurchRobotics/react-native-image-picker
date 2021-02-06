@@ -311,14 +311,14 @@ static const CGFloat AlivcLiveButtonWidth = 45.0f;
             if (!_advenceButton) {
                 _advenceButton = [self _buttonWithTitle:[@"高级" localString]];
                 [_advenceButton addTarget:self action:@selector(advancedButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-                [_buttonsContentView addSubview:_advenceButton];
+//                [_buttonsContentView addSubview:_advenceButton];
             }
             _advenceButton.center = CGPointMake(abcx, buttonsContentHeight - 20 - SafeBeautyBottom);
             
             if (!_normalButton) {
                 _normalButton = [self _buttonWithTitle:[@"普通" localString]];
                 [_normalButton addTarget:self action:@selector(normalButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-                [_buttonsContentView addSubview:_normalButton];
+//                [_buttonsContentView addSubview:_normalButton];
             }
             _normalButton.center = CGPointMake(buttonsContentWidth / 2 + 36, buttonsContentHeight - 20 - SafeBeautyBottom);
             
@@ -328,7 +328,7 @@ static const CGFloat AlivcLiveButtonWidth = 45.0f;
 //                CGFloat imcy = buttonsContentHeight - 2 - _triangleImageView.frame.size.height / 2;
 //                _triangleImageView.center = CGPointMake(abcx, imcy - SafeBeautyBottom);
                 [self setUIStyle:self.currentUIStyle];
-                [_buttonsContentView addSubview:_triangleImageView];
+//                [_buttonsContentView addSubview:_triangleImageView];
             }
             CGFloat imcy = buttonsContentHeight - 2 - _triangleImageView.frame.size.height / 2;
             _triangleImageView.center = CGPointMake(abcx, imcy - SafeBeautyBottom);
