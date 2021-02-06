@@ -79,6 +79,8 @@ AlivcRecordPasterViewDelegate>
 @property (nonatomic, strong) NSOperationQueue *queue;
 
 @property (nonatomic, assign) MotionRotateOritation oritation; //屏幕旋转方向
+
+@property (nonatomic, assign) BOOL isRecorderRolling;
 @end
 
 @implementation AliyunMagicCameraViewController
@@ -242,7 +244,7 @@ AlivcRecordPasterViewDelegate>
 - (void)updateViewsStatus{
     //更新录制按钮下方的删除按钮状态
     [self.bottomView updateViewsWithVideoPartCount:[self partCount]];
-    //更新录制时间
+//    //更新录制时间
     [self.bottomView refreshRecorderVideoDuration:self.recorderDuration];
     //更新录制UI
     [self.bottomView updateRecorderUI];
@@ -259,7 +261,7 @@ AlivcRecordPasterViewDelegate>
     [self.bottomView setHidden:self.timerCountLab.isTiming];
     
     //更新提词器背景色
-    if ([self.recorder startRecording] == 0) {
+    if (!self.isRecorderRolling) {
         [self updateTeleprompterViewStatus:false];
         self.teleprompter.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
     } else {
@@ -681,6 +683,7 @@ AlivcRecordPasterViewDelegate>
         
     }
     if ([self.recorder startRecording] == 0) {
+        self.isRecorderRolling = YES;
         [self updateViewsStatus];
         return YES;
     }else{
@@ -779,6 +782,7 @@ AlivcRecordPasterViewDelegate>
 - (void)recorderDidStopRecording{
     NSLog(@"----停止录制");
     //    _stopRecordActionUnfinished =NO;
+    self.isRecorderRolling = NO;
     _progressView.videoCount = [self partCount];
     //更新录制按钮下方的删除按钮状态
     [self.bottomView updateViewsWithVideoPartCount:[self partCount]];
@@ -1095,7 +1099,7 @@ AlivcRecordPasterViewDelegate>
 
 - (void)updateTeleprompterFrameStretch:(BOOL)needStretch
 {
-    if([self.recorder startRecording] == 0){
+    if(!self.isRecorderRolling){
         return;
     }
     [self updateTeleprompterViewStatus:needStretch];

@@ -56,7 +56,7 @@
     [self addSubview:_deleteBtn];
 
     [_slideView addSubview:_clickBtn];
-    [_slideView addSubview:_holdBtn];
+//    [_slideView addSubview:_holdBtn];
     [self addSubview:_slideView];
     
     
