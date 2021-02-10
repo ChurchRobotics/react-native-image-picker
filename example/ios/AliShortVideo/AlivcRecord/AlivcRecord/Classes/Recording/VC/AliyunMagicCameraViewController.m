@@ -168,6 +168,7 @@ AlivcRecordPasterViewDelegate>
     //添加预览view
     [self.view addSubview:self.recorder.preview];
     [self.view addSubview:self.teleprompter];
+    [self.teleprompter updateViewsByStartStatus:NO];
     [self addTeleprompterLeftView];
     //添加顶部录制进度条
     [self.view addSubview:self.progressView];
@@ -262,10 +263,10 @@ AlivcRecordPasterViewDelegate>
     
     //更新提词器背景色
     if (!self.isRecorderRolling) {
-        [self updateTeleprompterViewStatus:false];
-        self.teleprompter.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
+        [self updateTeleprompterViewStatus:NO];
+        [self.teleprompter updateViewsByStartStatus:NO];
     } else {
-        self.teleprompter.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+        [self.teleprompter updateViewsByStartStatus:YES];
     }
 }
 //更新闪光灯按钮状态
@@ -788,8 +789,8 @@ AlivcRecordPasterViewDelegate>
     //更新录制按钮下方的删除按钮状态
     [self.bottomView updateViewsWithVideoPartCount:[self partCount]];
     //更新提词器背景色
-    [self updateTeleprompterViewStatus:false];
-    self.teleprompter.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
+    [self updateTeleprompterViewStatus:NO];
+    [self.teleprompter updateViewsByStartStatus:NO];
 }
 
 - (void)recorderDidFinishRecording{

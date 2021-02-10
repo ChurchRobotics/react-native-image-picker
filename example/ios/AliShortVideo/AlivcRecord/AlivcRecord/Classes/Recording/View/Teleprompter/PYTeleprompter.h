@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) NSString *word;
 - (instancetype)initWithType:(TeleprompterType)type;
 
-
+- (void)updateViewsByStartStatus:(BOOL)isStart;
 @end
 
 NS_ASSUME_NONNULL_END

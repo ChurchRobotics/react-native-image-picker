@@ -54,8 +54,18 @@
 
 
 - (void)setupViews {
-    
-    
+    [self setupViewsWithType:TeleprompterTypeUp];
+}
+
+- (void)updateViewsByStartStatus:(BOOL)isStart
+{
+    if (isStart) {
+        self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+        self.textView.textColor = [[UIColor whiteColor] colorWithAlphaComponent:1.0];
+    } else {
+        self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
+        self.textView.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
+    }
 }
 
 - (void)setupViewsWithType:(TeleprompterType)type {
