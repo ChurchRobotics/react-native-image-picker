@@ -138,14 +138,15 @@
     array[0] = [NSValue valueWithCMTime:CMTimeMakeWithSeconds(0.1, 1000)];
     
     __block int index = 0;
+    __weak typeof(self)weakSelf = self;
     [self.imageGenerator generateCGImagesAsynchronouslyForTimes:array completionHandler:^(CMTime requestedTime, CGImageRef  _Nullable image, CMTime actualTime, AVAssetImageGeneratorResult result, NSError * _Nullable error) {
         
         if (result == AVAssetImageGeneratorSucceeded) {
             UIImage *img = [[UIImage alloc] initWithCGImage:image];
             dispatch_sync(dispatch_get_main_queue(), ^{
-                [_imagesArray addObject:img];
+                [weakSelf.imagesArray addObject:img];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-                [_collectionView insertItemsAtIndexPaths:@[indexPath]];
+                [weakSelf.collectionView insertItemsAtIndexPaths:@[indexPath]];
                 index++;
             });
         }

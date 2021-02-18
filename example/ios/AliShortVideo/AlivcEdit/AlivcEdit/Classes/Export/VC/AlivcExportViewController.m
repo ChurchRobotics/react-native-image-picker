@@ -18,6 +18,10 @@
 #import "NSString+AlivcHelper.h"
 #import <AlivcCommon/UIColor+AlivcHelper.h>
 #import "PYOutputVideoInfo.h"
+#import <AlivcCrop/AliyunCropViewController.h>
+#import <AlivcCrop/PYCropViewController.h>
+#import "AliyunPathManager.h"
+#import "MBProgressHUD+AlivcHelper.h"
 
 @interface AlivcExportViewController () <
 AliyunPublishTopViewDelegate, AliyunIExporterCallback, UITextFieldDelegate>
@@ -25,6 +29,7 @@ AliyunPublishTopViewDelegate, AliyunIExporterCallback, UITextFieldDelegate>
 @property(nonatomic, strong) AliyunPublishTopView *topView;
 @property(nonatomic, strong) UITextField *titleView;
 @property(nonatomic, strong) UIImageView *backgroundView;
+
 @property(nonatomic, strong) UIImageView *coverImageView;
 @property(nonatomic, strong) UIButton *pickButton;
 @property(nonatomic, strong) UIProgressView *progressView;
@@ -167,6 +172,8 @@ AliyunPublishTopViewDelegate, AliyunIExporterCallback, UITextFieldDelegate>
     self.coverImageView.userInteractionEnabled = YES;
 //    [effectView.contentView addSubview:self.coverImageView];
     [self.containerView addSubview:self.coverImageView];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToCut:)];
+    [self.coverImageView addGestureRecognizer:tap];
     
     self.pickButton =
     [[UIButton alloc] initWithFrame:CGRectMake(0,
@@ -321,14 +328,24 @@ AliyunPublishTopViewDelegate, AliyunIExporterCallback, UITextFieldDelegate>
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+- (void)tapToCut:(UITapGestureRecognizer *)tapGesture
+{
+    AliyunMediaConfig *config = [_config copy];
+    config.sourcePath = _config.outputPath;
+    
+//    AliyunCropViewController *cut = [[AliyunCropViewController alloc] init];
+    PYCropViewController *cut = [PYCropViewController new];
+    cut.cutInfo = config;
+    cut.delegate = (id<AliyunCropViewControllerDelegate>)self;
+    [self.navigationController pushViewController:cut animated:YES];
+}
+
 #pragma mark - util
 
 - (UIImage *)thumbnailWithVideoPath:(NSString *)videoPath
                          outputSize:(CGSize)outputSize {
-    AVURLAsset *asset =
-    [AVURLAsset assetWithURL:[NSURL fileURLWithPath:videoPath]];
-    AVAssetImageGenerator *_generator =
-    [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:videoPath]];
+    AVAssetImageGenerator *_generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
     _generator.maximumSize = outputSize;
     _generator.appliesPreferredTrackTransform = YES;
     _generator.requestedTimeToleranceAfter = kCMTimeZero;
@@ -391,6 +408,45 @@ AliyunPublishTopViewDelegate, AliyunIExporterCallback, UITextFieldDelegate>
 //    vc.videoSize = _outputSize;
 //    vc.videoTitle = _titleView.text;
 //    [self.navigationController pushViewController:vc animated:YES];
+}
+
+
+#pragma mark - AliyunCropViewControllerDelegate
+/**
+ 退出了裁剪界面
+ */
+- (void)cropViewControllerExit
+{
+    
+}
+
+/**
+ 裁剪完成
+
+ @param mediaInfo 裁剪配置
+ @param controller 裁剪的试图控制器
+ */
+- (void)cropViewControllerFinish:(AliyunMediaConfig *)mediaInfo viewController:(UIViewController *)controller
+{
+    _config = mediaInfo;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [MBProgressHUD showSucessMessage:@"裁剪完成" inView:[UIApplication sharedApplication].keyWindow];
+    });
+}
+- (void)cropViewControllerFinish:(AliyunMediaConfig *)mediaInfo coverImage:(UIImage *)image viewController:(UIViewController *)controller;
+{
+    _config = mediaInfo;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.image = image;
+        self.coverImageView.image = image;
+        self.backgroundView.image = image;
+        [MBProgressHUD showSucessMessage:@"裁剪完成" inView:[UIApplication sharedApplication].keyWindow];
+    });
+}
+
+- (void)cropViewControllerFakeFinish:(AliyunMediaConfig *)mediaInfo viewController:(UIViewController *)controller
+{
+    
 }
 
 #pragma mark - export callback

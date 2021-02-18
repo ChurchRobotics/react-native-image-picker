@@ -1,18 +1,15 @@
 //
-//  AliyunCropViewController.h
-//  AliyunVideo
+//  PYCropViewController.h
+//  AlivcEdit
 //
-//  Created by dangshuai on 17/1/13.
-//  Copyright (C) 2010-2017 Alibaba Group Holding Limited. All rights reserved.
+//  Created by jimmy on 2021/2/10.
 //
 
 #import <UIKit/UIKit.h>
 #import "AliyunMediaConfig.h"
 #import "AliyunCropViewControllerDelegate.h"
 
-
-@interface AliyunCropViewController : UIViewController
-
+@interface PYCropViewController : UIViewController
 /**
  视频配置
  */
@@ -27,7 +24,7 @@
  假裁剪，获取裁剪时间段，不真正裁剪视频
  */
 @property (nonatomic, assign) BOOL fakeCrop;
+@property (nonatomic, strong) void(^finishHandler)(UIImage *image);
 @end
-
 
 

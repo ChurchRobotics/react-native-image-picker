@@ -194,54 +194,54 @@
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  UITouch *touch = (UITouch *)[touches anyObject];
-  CGPoint point = [touch locationInView:self.collectionView];
+    UITouch *touch = (UITouch *)[touches anyObject];
+    CGPoint point = [touch locationInView:self.collectionView];
     CGFloat collectionViewWidth = self.frame.size.width-17;
-  CGFloat percent = point.x / collectionViewWidth;
+    CGFloat percent = point.x / collectionViewWidth;
     NSLog(@"point--%f",point.x);
     if (point.x < 17) {
         percent = 17/collectionViewWidth;
     }
-  if (percent < 0) {
-    percent = 0;
-  } else if (percent > 1) {
-    percent = 1;
-  }
-  CMTime time = CMTimeMake(percent * _duration * 1000, 1000);
-  if (_imageCaptured) {
-    _imageCaptured = NO;
-    dispatch_async(
-        dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    if (percent < 0) {
+        percent = 0;
+    } else if (percent > 1) {
+        percent = 1;
+    }
+    CMTime time = CMTimeMake(percent * _duration * 1000, 1000);
+    if (_imageCaptured) {
+        _imageCaptured = NO;
+        dispatch_async(
+                       dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             self->_selectedImage = [self coverImageAtTime:time];
             [self->_delegate pickViewDidUpdateImage:self->_selectedImage];
             self->_imageCaptured = YES;
         });
-  }
-  self.progressView.center = CGPointMake(collectionViewWidth * percent,
-                                         CGRectGetHeight(self.frame) / 2);
+    }
+    self.progressView.center = CGPointMake(collectionViewWidth * percent,
+                                           CGRectGetHeight(self.frame) / 2);
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  UITouch *touch = (UITouch *)[touches anyObject];
-  CGPoint point = [touch locationInView:self.collectionView];
+    UITouch *touch = (UITouch *)[touches anyObject];
+    CGPoint point = [touch locationInView:self.collectionView];
     CGFloat collectionViewWidth = self.frame.size.width-17;
-  CGFloat percent = point.x / collectionViewWidth;
+    CGFloat percent = point.x / collectionViewWidth;
     if (point.x < 17) {
         percent = 17/collectionViewWidth;
     }
-  if (percent < 0) {
-    percent = 0;
-  } else if (percent > 1) {
-    percent = 1;
-  }
-  CMTime time = CMTimeMake(percent * _duration * 1000, 1000);
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
-                 ^{
-                     self->_selectedImage = [self coverImageAtTime:time];
-                     [self->_delegate pickViewDidUpdateImage:self->_selectedImage];
-                 });
-  self.progressView.center = CGPointMake(collectionViewWidth * percent,
-                                         CGRectGetHeight(self.frame) / 2);
+    if (percent < 0) {
+        percent = 0;
+    } else if (percent > 1) {
+        percent = 1;
+    }
+    CMTime time = CMTimeMake(percent * _duration * 1000, 1000);
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+                   ^{
+        self->_selectedImage = [self coverImageAtTime:time];
+        [self->_delegate pickViewDidUpdateImage:self->_selectedImage];
+    });
+    self.progressView.center = CGPointMake(collectionViewWidth * percent,
+                                           CGRectGetHeight(self.frame) / 2);
 }
 
 - (UIImage *)coverImageAtTime:(CMTime)time {
