@@ -316,20 +316,17 @@ AliyunPublishTopViewDelegate, AliyunIExporterCallback, UITextFieldDelegate>
 }
 
 - (void)pickButtonClicked {
-    __weak typeof(self)weakSelf = self;
-    AliyunCoverPickViewController *vc = [AliyunCoverPickViewController new];
-    vc.outputSize = _outputSize;
-    vc.videoPath = _config.outputPath;
-    vc.finishHandler = ^(UIImage *image) {
-        weakSelf.image = image;
-        weakSelf.coverImageView.image = image;
-        weakSelf.backgroundView.image = image;
-    };
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
-- (void)tapToCut:(UITapGestureRecognizer *)tapGesture
-{
+//    __weak typeof(self)weakSelf = self;
+//    AliyunCoverPickViewController *vc = [AliyunCoverPickViewController new];
+//    vc.outputSize = _outputSize;
+//    vc.videoPath = _config.outputPath;
+//    vc.finishHandler = ^(UIImage *image) {
+//        weakSelf.image = image;
+//        weakSelf.coverImageView.image = image;
+//        weakSelf.backgroundView.image = image;
+//    };
+//    [self.navigationController pushViewController:vc animated:YES];
+    
     AliyunMediaConfig *config = [_config copy];
     config.sourcePath = _config.outputPath;
     
@@ -338,6 +335,11 @@ AliyunPublishTopViewDelegate, AliyunIExporterCallback, UITextFieldDelegate>
     cut.cutInfo = config;
     cut.delegate = (id<AliyunCropViewControllerDelegate>)self;
     [self.navigationController pushViewController:cut animated:YES];
+}
+
+- (void)tapToCut:(UITapGestureRecognizer *)tapGesture
+{
+   
 }
 
 #pragma mark - util
